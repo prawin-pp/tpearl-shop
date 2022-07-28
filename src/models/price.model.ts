@@ -1,10 +1,14 @@
 export interface PriceModel {
   id: string;
-  payment_channel: PaymentChannelModel;
   price: number;
+  payment_channel: {
+    data: PaymentChannelModel;
+  };
 }
 
 export interface PaymentChannelModel {
   id: string;
-  name: 'CASH' | 'GRAB' | 'LINEMAN' | 'ROBINHOOD';
+  attributes: {
+    name: 'CASH' | 'GRAB' | 'LINEMAN' | 'ROBINHOOD';
+  };
 }

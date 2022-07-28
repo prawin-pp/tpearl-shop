@@ -18,30 +18,30 @@
   <div
     class="flex aspect-1 items-center justify-center overflow-hidden rounded border border-gray-200"
   >
-    {#if product.image}
+    <!-- {#if product.attributes.image}
       <img
         src={`${config.apiBaseUrl}${product.image.formats.small.url}`}
         alt={product.image.alternativeText}
         class="h-full w-full object-contain"
       />
-    {/if}
+    {/if} -->
   </div>
   <div class="mt-auto flex flex-col">
-    <span class="overflow-hidden text-ellipsis whitespace-nowrap text-lg font-bold">
-      {product.name}
+    <span class="overflow-hidden text-ellipsis whitespace-nowrap font-bold">
+      {product.attributes.name}
     </span>
     <div class="flex gap-x-1">
-      {#each product.prices as price, i}
-        <Tooltip content={price.payment_channel.name}>
+      {#each product.attributes.prices as price, i}
+        <Tooltip content={price.payment_channel.data.attributes.name}>
           <span
-            class:text-black={price.payment_channel.name === 'CASH'}
-            class:text-grab={price.payment_channel.name === 'GRAB'}
-            class:text-lineman={price.payment_channel.name === 'LINEMAN'}
-            class:text-robinhood={price.payment_channel.name === 'ROBINHOOD'}
+            class:text-black={price.payment_channel.data.attributes.name === 'CASH'}
+            class:text-grab={price.payment_channel.data.attributes.name === 'GRAB'}
+            class:text-lineman={price.payment_channel.data.attributes.name === 'LINEMAN'}
+            class:text-robinhood={price.payment_channel.data.attributes.name === 'ROBINHOOD'}
           >
             {price.price}
           </span>
-          {#if i !== product.prices.length - 1}
+          {#if i !== product.attributes.prices.length - 1}
             <span class="text-gray-300">/</span>
           {/if}
         </Tooltip>
