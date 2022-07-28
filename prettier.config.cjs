@@ -2,7 +2,7 @@
  * @type {import('prettier').Config}
  **/
 module.exports = {
-  printWidth: 120,
+  printWidth: 100,
   tabWidth: 2,
   semi: true,
   singleQuote: true,
@@ -14,8 +14,10 @@ module.exports = {
   plugins: [require('prettier-plugin-tailwindcss')],
   tailwindConfig: './tailwind.config.cjs',
   svelteSortOrder: 'options-scripts-markup-styles',
-  svelteStrictMode: true,
+  svelteStrictMode: false,
   svelteAllowShorthand: false,
+  svelteBracketNewLine: true,
+  svelteIndentScriptAndStyle: true,
   overrides: [
     {
       files: '*.svelte',
