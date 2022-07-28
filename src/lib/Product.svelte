@@ -32,19 +32,21 @@
     </span>
     <div class="flex gap-x-1">
       {#each product.attributes.prices as price, i}
-        <Tooltip content={price.payment_channel.data.attributes.name}>
-          <span
-            class:text-black={price.payment_channel.data.attributes.name === 'CASH'}
-            class:text-grab={price.payment_channel.data.attributes.name === 'GRAB'}
-            class:text-lineman={price.payment_channel.data.attributes.name === 'LINEMAN'}
-            class:text-robinhood={price.payment_channel.data.attributes.name === 'ROBINHOOD'}
-          >
-            {price.price}
-          </span>
-          {#if i !== product.attributes.prices.length - 1}
-            <span class="text-gray-300">/</span>
-          {/if}
-        </Tooltip>
+        {#if price.payment_channel.data.attributes.name !== 'PROMPTPAY'}
+          <Tooltip content={price.payment_channel.data.attributes.name}>
+            <span
+              class:text-black={price.payment_channel.data.attributes.name === 'CASH'}
+              class:text-grab={price.payment_channel.data.attributes.name === 'GRAB'}
+              class:text-lineman={price.payment_channel.data.attributes.name === 'LINEMAN'}
+              class:text-robinhood={price.payment_channel.data.attributes.name === 'ROBINHOOD'}
+            >
+              {price.price}
+            </span>
+            {#if i !== product.attributes.prices.length - 1}
+              <span class="text-gray-300">/</span>
+            {/if}
+          </Tooltip>
+        {/if}
       {/each}
     </div>
   </div>

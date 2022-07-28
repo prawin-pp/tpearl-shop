@@ -9,6 +9,6 @@ export interface PriceModel {
 export interface PaymentChannelModel {
   id: string;
   attributes: {
-    name: 'CASH' | 'GRAB' | 'LINEMAN' | 'ROBINHOOD';
+    name: 'CASH' | 'PROMPTPAY' | 'GRAB' | 'LINEMAN' | 'ROBINHOOD';
   };
 }
