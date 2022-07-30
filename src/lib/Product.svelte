@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { ProductModel } from 'src/models/product.model';
   import config from 'src/config';
+  import Tooltip from './Tooltip.svelte';
 
   export { classes as class };
   export let product: ProductModel;
@@ -32,14 +33,16 @@
     <div class="flex gap-x-1">
       {#each product.attributes.prices as price, i}
         {#if price.payment_channel.data.attributes.name !== 'PROMPTPAY'}
-          <span
-            class:text-black={price.payment_channel.data.attributes.name === 'CASH'}
-            class:text-grab={price.payment_channel.data.attributes.name === 'GRAB'}
-            class:text-lineman={price.payment_channel.data.attributes.name === 'LINEMAN'}
-            class:text-robinhood={price.payment_channel.data.attributes.name === 'ROBINHOOD'}
-          >
-            {price.price}
-          </span>
+          <Tooltip content={price.payment_channel.data.attributes.name}>
+            <span
+              class:text-black={price.payment_channel.data.attributes.name === 'CASH'}
+              class:text-grab={price.payment_channel.data.attributes.name === 'GRAB'}
+              class:text-lineman={price.payment_channel.data.attributes.name === 'LINEMAN'}
+              class:text-robinhood={price.payment_channel.data.attributes.name === 'ROBINHOOD'}
+            >
+              {price.price}
+            </span>
+          </Tooltip>
           {#if i !== product.attributes.prices.length - 1}
             <span class="text-gray-300">/</span>
           {/if}

@@ -1,8 +1,9 @@
 <script lang="ts">
   import { onMount, type ComponentType } from 'svelte';
   import router from 'page';
+
   import routes from 'src/routes';
-  import Loading from './lib/Loading.svelte';
+  import Loading from 'src/lib/Loading.svelte';
 
   let page: ComponentType;
   let params: Record<string, string>;
