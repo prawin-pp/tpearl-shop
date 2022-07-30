@@ -21,7 +21,7 @@
 <div class="flex h-full flex-col gap-y-5 overflow-y-auto overflow-x-hidden p-5">
   {#each categories as category}
     <section class="flex flex-col gap-y-2">
-      <span class="text-2xl font-bold">{category || 'อื่นๆ (Other)'}</span>
+      <span class="text-xl font-bold">{category || 'อื่นๆ (Other)'}</span>
       <div class="-ml-5 flex gap-x-5 overflow-auto scroll-smooth pl-5 pb-3">
         {#each productsSorted as product}
           {#if product.attributes.category?.data?.attributes?.name === category}

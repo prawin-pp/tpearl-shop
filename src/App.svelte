@@ -2,6 +2,7 @@
   import { onMount, type ComponentType } from 'svelte';
   import router from 'page';
   import routes from 'src/routes';
+  import Loading from './lib/Loading.svelte';
 
   let page: ComponentType;
   let params: Record<string, string>;
@@ -29,3 +30,5 @@
   <svelte:component this={page} params={params} location={location} />
 </main>
 <footer />
+
+<Loading />
