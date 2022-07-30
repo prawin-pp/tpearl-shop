@@ -1,29 +1,5 @@
 <script lang="ts">
-  import type { AxiosRequestConfig, AxiosResponse } from 'axios';
-
-  import { onMount } from 'svelte';
-  import client from 'src/services/api/client.api';
   import { loading } from 'src/stores/loading.store';
-
-  function handleRequest(config: AxiosRequestConfig) {
-    loading.update((value) => value + 1);
-    return config;
-  }
-
-  function handleResponse(response: AxiosResponse) {
-    loading.update((value) => value - 1);
-    return response;
-  }
-
-  function handleError(error: Error) {
-    loading.update((value) => value - 1);
-    return error;
-  }
-
-  onMount(() => {
-    client.interceptors.request.use(handleRequest, handleError);
-    client.interceptors.response.use(handleResponse, handleError);
-  });
 </script>
 
 <div
