@@ -2,7 +2,7 @@
   import type { AxiosRequestConfig, AxiosResponse } from 'axios';
 
   import { onMount } from 'svelte';
-  import client from 'src/services/api/client';
+  import client from 'src/services/api/client.api';
   import { loading } from 'src/stores/loading.store';
 
   function handleRequest(config: AxiosRequestConfig) {

@@ -1,6 +1,6 @@
 import type { ProductModel } from 'src/models/product.model';
-import client from './client';
-import type { ResponseList } from './model';
+import client from './client.api';
+import type { ResponseList } from './model.api';
 import qs from 'qs';
 
 export const getProducts = async () => {
