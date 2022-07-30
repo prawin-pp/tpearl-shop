@@ -2,6 +2,7 @@
   import { currencyText } from 'src/directives/currency.directive';
 
   import Button from './Button.svelte';
+  import Icon from './Icon.svelte';
 </script>
 
 <div id="cart" class="flex h-full flex-col gap-y-5 p-3">
@@ -10,7 +11,9 @@
       <span class="text-xl font-bold">ออเดอร์</span>
       <div
         class="ml-auto rounded-full border border-gray-200 bg-transparent p-3 text-gray-500 transition-all hover:cursor-pointer hover:bg-gray-200 hover:text-gray-700"
-      />
+      >
+        <Icon>clear</Icon>
+      </div>
     </div>
   </section>
   <section />
