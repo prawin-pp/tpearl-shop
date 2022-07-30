@@ -1,6 +1,5 @@
 <script lang="ts">
   import { currencyText } from 'src/directives/currency.directive';
-  import { X } from 'svelte-heros';
 
   import Button from './Button.svelte';
 </script>
@@ -11,9 +10,7 @@
       <span class="text-xl font-bold">ออเดอร์</span>
       <div
         class="ml-auto rounded-full border border-gray-200 bg-transparent p-3 text-gray-500 transition-all hover:cursor-pointer hover:bg-gray-200 hover:text-gray-700"
-      >
-        <X size="20" />
-      </div>
+      />
     </div>
   </section>
   <section />

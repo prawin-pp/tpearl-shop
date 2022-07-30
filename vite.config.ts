@@ -13,7 +13,6 @@ export default defineConfig(({ mode }) => {
       hmr: true,
       watch: {},
     },
-    build: {},
     plugins: [svelte()],
     resolve: {
       alias: {
