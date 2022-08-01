@@ -13,7 +13,7 @@ export const createPayment = async (req: ICreatePaymentRequest) => {
   const requestBody = { data: req };
 
   const response = await client.post<IResponseData<IPaymentResponse>>(
-    `/payments?${query}`,
+    `/api/payments?${query}`,
     requestBody
   );
   return response.data.data;

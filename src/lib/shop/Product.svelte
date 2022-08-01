@@ -1,4 +1,5 @@
 <script lang="ts">
+  import config from 'src/config';
   import type { IProduct } from 'src/models/product.model';
   import Tooltip from '../common/Tooltip.svelte';
 
@@ -18,13 +19,13 @@
   <div
     class="flex aspect-1 items-center justify-center overflow-hidden rounded border border-gray-200"
   >
-    <!-- {#if product.attributes.image}
+    {#if product.image}
       <img
-        src={`${config.apiBaseUrl}${product.image.formats.small.url}`}
-        alt={product.image.alternativeText}
+        src={config.apiBaseUrl + product.image.attributes.formats.small.url}
+        alt={product.image.attributes.alternativeText}
         class="h-full w-full object-contain"
       />
-    {/if} -->
+    {/if}
   </div>
   <div class="mt-auto flex flex-col">
     <span class="overflow-hidden text-ellipsis whitespace-nowrap font-bold">

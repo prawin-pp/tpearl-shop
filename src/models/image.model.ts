@@ -1,17 +1,20 @@
 export interface IImage {
   id: string;
-  name: string;
-  alternativeText: string;
-  formats: {
-    small: IImageDetail;
-    thumbnail: IImageDetail;
+  attributes: {
+    name: string;
+    alternativeText: string;
+    formats: {
+      small: IImageDetail;
+      medium: IImageDetail;
+      thumbnail: IImageDetail;
+    };
+    hash: string;
+    ext: string;
+    mime: string;
+    size: number;
+    url: string;
+    previewUrl: string;
   };
-  hash: string;
-  ext: string;
-  mime: string;
-  size: number;
-  url: string;
-  previewUrl: string;
 }
 
 export interface IImageDetail {

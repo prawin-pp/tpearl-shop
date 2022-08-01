@@ -4,6 +4,7 @@
 
   import routes from 'src/routes';
   import Loading from 'src/lib/Loading.svelte';
+  import Notification from './lib/Notification.svelte';
 
   let page: ComponentType;
   let params: Record<string, string>;
@@ -33,3 +34,4 @@
 <footer />
 
 <Loading />
+<Notification />

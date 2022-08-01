@@ -12,6 +12,8 @@
   import type { ICreatePaymentRequest } from 'src/services/api/models/payment.model';
   import { createPayment } from 'src/services/api/payment.api';
   import numeral from 'numeral';
+  import { ToastController } from 'src/utils/toast';
+  import { currencyText } from 'src/utils/currency';
 
   let confirmDeleteAllProductModal: ConfirmModal;
   let confirmPaymentModal: ConfirmModal;
@@ -94,7 +96,13 @@
 
     await createPayment(req);
 
-    handleRemoveAllProduct();
+    ToastController.success(
+      'ชำระเงินเรียบร้อย',
+      `ทั้งหมด ${cart.items.length} รายการ ราคา ${currencyText(totalAmount)} บาท`,
+      10000
+    );
+
+    cart = { ...cart, items: [] };
     confirmPaymentModal.hide();
   }
 

@@ -3,6 +3,7 @@ import client from './client.api';
 import type { IResponseList } from './models/response.model';
 import qs from 'qs';
 import type { IProductResponse } from './models/product.model';
+import config from 'src/config';
 
 export const getProducts = async (): Promise<IProduct[]> => {
   const query = qs.stringify(
@@ -11,7 +12,7 @@ export const getProducts = async (): Promise<IProduct[]> => {
     },
     { encodeValuesOnly: true }
   );
-  const response = await client.get<IResponseList<IProductResponse>>(`/products?${query}`);
+  const response = await client.get<IResponseList<IProductResponse>>(`/api/products?${query}`);
   return response.data.data.map<IProduct>((item) => {
     return {
       id: item.id,
@@ -28,7 +29,7 @@ export const getProducts = async (): Promise<IProduct[]> => {
         },
         price: price.price,
       })),
-      image: '',
+      image: item.attributes.image?.data,
     };
   });
 };

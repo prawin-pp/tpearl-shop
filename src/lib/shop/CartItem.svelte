@@ -18,6 +18,7 @@
   import type { TPaymentChannel } from 'src/models/price.model';
   import Icon from '../common/Icon.svelte';
   import { currencyText } from 'src/utils/currency';
+  import config from 'src/config';
 
   const dispatch = createEventDispatcher<ICartItemEvent>();
 
@@ -38,7 +39,14 @@
 </script>
 
 <div class="grid grid-cols-[96px_1fr] gap-x-4 p-4 {classes || ''}">
-  <div class="h-24 w-24 rounded-xl border border-gray-200 bg-white" />
+  <div class="h-24 w-24 overflow-hidden rounded-xl border border-gray-200 bg-white">
+    {#if item.product.image}
+      <img
+        src={config.apiBaseUrl + item.product.image.attributes.formats.small.url}
+        alt={item.product.image.attributes.alternativeText}
+      />
+    {/if}
+  </div>
   <div class="grid grid-flow-row auto-rows-min gap-y-1">
     <span class="line-clamp-2">{item.product.name}</span>
     <span class="font-bold text-rose-600">{currencyText(totalAmount)}</span>

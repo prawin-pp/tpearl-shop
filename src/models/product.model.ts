@@ -1,4 +1,5 @@
 import type { ICategory } from './category.model';
+import type { IImage } from './image.model';
 import type { IPrice } from './price.model';
 
 export interface IProduct {
@@ -6,5 +7,5 @@ export interface IProduct {
   name: string;
   category: ICategory;
   prices: IPrice[];
-  image: string;
+  image: IImage;
 }
