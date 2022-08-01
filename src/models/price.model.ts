@@ -1,14 +1,12 @@
-export interface PriceModel {
-  id: string;
+export interface IPrice {
+  id: number;
   price: number;
-  payment_channel: {
-    data: PaymentChannelModel;
-  };
+  paymentChannel: IPaymentChannel;
 }
 
-export interface PaymentChannelModel {
-  id: string;
-  attributes: {
-    name: 'CASH' | 'PROMPTPAY' | 'GRAB' | 'LINEMAN' | 'ROBINHOOD';
-  };
+export interface IPaymentChannel {
+  id: number;
+  name: TPaymentChannel;
 }
+
+export type TPaymentChannel = 'CASH' | 'PROMPTPAY' | 'GRAB' | 'LINEMAN' | 'ROBINHOOD';

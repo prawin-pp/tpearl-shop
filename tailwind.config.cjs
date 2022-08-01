@@ -4,8 +4,10 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        cash: '#3f83f8',
+        promptpay: '#003c6a',
         grab: '#00b14f',
-        lineman: '#10c157',
+        lineman: '#0ec963',
         robinhood: '#cf1e9e',
       },
     },

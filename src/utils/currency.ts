@@ -1,0 +1,9 @@
+export const currencyText = (value: string | number) => {
+  const number = parseFloat(value + '');
+  return Intl.NumberFormat('th', {
+    style: 'currency',
+    currency: 'THB',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(number);
+};

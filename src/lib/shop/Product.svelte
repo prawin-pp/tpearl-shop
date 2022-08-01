@@ -1,10 +1,9 @@
 <script lang="ts">
-  import type { ProductModel } from 'src/models/product.model';
-  import config from 'src/config';
-  import Tooltip from './Tooltip.svelte';
+  import type { IProduct } from 'src/models/product.model';
+  import Tooltip from '../common/Tooltip.svelte';
 
   export { classes as class };
-  export let product: ProductModel;
+  export let product: IProduct;
 
   let classes: string;
 </script>
@@ -14,6 +13,7 @@
   class={`flex min-w-[240px] select-none flex-col gap-y-2 overflow-hidden rounded-xl bg-white p-3  ${
     classes || ''
   }`}
+  on:click
 >
   <div
     class="flex aspect-1 items-center justify-center overflow-hidden rounded border border-gray-200"
@@ -28,22 +28,22 @@
   </div>
   <div class="mt-auto flex flex-col">
     <span class="overflow-hidden text-ellipsis whitespace-nowrap font-bold">
-      {product.attributes.name}
+      {product.name}
     </span>
     <div class="flex gap-x-1">
-      {#each product.attributes.prices as price, i}
-        {#if price.payment_channel.data.attributes.name !== 'PROMPTPAY'}
-          <Tooltip content={price.payment_channel.data.attributes.name}>
+      {#each product.prices as price, i}
+        {#if price.paymentChannel.name !== 'PROMPTPAY'}
+          <Tooltip content={price.paymentChannel.name}>
             <span
-              class:text-black={price.payment_channel.data.attributes.name === 'CASH'}
-              class:text-grab={price.payment_channel.data.attributes.name === 'GRAB'}
-              class:text-lineman={price.payment_channel.data.attributes.name === 'LINEMAN'}
-              class:text-robinhood={price.payment_channel.data.attributes.name === 'ROBINHOOD'}
+              class:text-black={price.paymentChannel.name === 'CASH'}
+              class:text-grab={price.paymentChannel.name === 'GRAB'}
+              class:text-lineman={price.paymentChannel.name === 'LINEMAN'}
+              class:text-robinhood={price.paymentChannel.name === 'ROBINHOOD'}
             >
               {price.price}
             </span>
           </Tooltip>
-          {#if i !== product.attributes.prices.length - 1}
+          {#if i !== product.prices.length - 1}
             <span class="text-gray-300">/</span>
           {/if}
         {/if}

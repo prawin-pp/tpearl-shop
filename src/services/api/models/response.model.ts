@@ -1,4 +1,4 @@
-export interface ResponseList<T> {
+export interface IResponseList<T> {
   data: T[];
   meta: {
     pagination: {
@@ -8,4 +8,9 @@ export interface ResponseList<T> {
       total: number;
     };
   };
+}
+
+export interface IResponseData<T> {
+  data: T;
+  meta: {};
 }

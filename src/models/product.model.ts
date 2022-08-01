@@ -1,16 +1,10 @@
-import type { CategoryModel } from './category.model';
-import type { PriceModel } from './price.model';
+import type { ICategory } from './category.model';
+import type { IPrice } from './price.model';
 
-export interface ProductModel {
-  id: string;
-  attributes: {
-    name: string;
-    image: {
-      data: string;
-    };
-    category: {
-      data: CategoryModel;
-    };
-    prices: PriceModel[];
-  };
+export interface IProduct {
+  id: number;
+  name: string;
+  category: ICategory;
+  prices: IPrice[];
+  image: string;
 }

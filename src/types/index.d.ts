@@ -11,3 +11,19 @@ type TooltipOption = {
   onHide?: () => void;
   onShow?: () => void;
 };
+
+declare class Modal {
+  constructor(targetElement: HTMLElement, options?: ModalOption);
+  _options: ModalOption;
+  show(): void;
+  hide(): void;
+  toggle(): void;
+}
+
+type ModalOption = {
+  placement: `${'top' | 'center' | 'right'}-${'left' | 'center' | 'right'}`;
+  backdropClasses: string;
+  onHide(): void;
+  onShow(): void;
+  onToggle(): void;
+};

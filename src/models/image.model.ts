@@ -1,10 +1,10 @@
-export interface ImageModel {
+export interface IImage {
   id: string;
   name: string;
   alternativeText: string;
   formats: {
-    small: ImageDetail;
-    thumbnail: ImageDetail;
+    small: IImageDetail;
+    thumbnail: IImageDetail;
   };
   hash: string;
   ext: string;
@@ -14,7 +14,7 @@ export interface ImageModel {
   previewUrl: string;
 }
 
-export interface ImageDetail {
+export interface IImageDetail {
   ext: string;
   url: string;
   hash: string;

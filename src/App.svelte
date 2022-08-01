@@ -9,7 +9,7 @@
   let params: Record<string, string>;
   let location: PageJS.Context;
 
-  function _setupRouter() {
+  function setupRouter() {
     routes.forEach((route) => {
       router(route.path, (ctx, next) => {
         page = route.component;
@@ -21,7 +21,7 @@
   }
 
   onMount(() => {
-    _setupRouter();
+    setupRouter();
   });
 </script>
 
