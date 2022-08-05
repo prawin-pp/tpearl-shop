@@ -64,7 +64,7 @@
   </section>
   <section class="mt-auto flex flex-col gap-y-4 px-4">
     <div class="h-0 border-t-2 border-dashed border-gray-200" />
-    <div class="flex justify-between font-bold">
+    <div class="flex justify-between text-xl font-bold">
       <span>ยอดรวม</span>
       <span>{currencyText(totalAmount)}</span>
     </div>

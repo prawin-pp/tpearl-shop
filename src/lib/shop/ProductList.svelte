@@ -30,20 +30,22 @@
 
 <div class="flex h-full flex-col gap-y-5 overflow-y-auto overflow-x-hidden p-5">
   {#each categories as category}
-    <section class="flex flex-col gap-y-2">
-      <span class="text-xl font-bold">{category.name || 'อื่นๆ (Other)'}</span>
-      <div class="-ml-5 flex gap-x-5 overflow-auto scroll-smooth pl-5 pb-3">
-        {#each filteredProducts as product}
-          {#if product.category?.name === category.name}
-            <Product
-              product={product}
-              paymentChannel={paymentChannel}
-              class="transition-all hover:cursor-pointer hover:shadow-md"
-              on:click={() => dispatch('select-product', product)}
-            />
-          {/if}
-        {/each}
-      </div>
-    </section>
+    {#if filteredProducts.some((product) => product.category?.name === category.name)}
+      <section class="flex flex-col gap-y-2.5">
+        <span class="text--500">{category.name || 'อื่นๆ (Other)'}</span>
+        <div class="-ml-5 flex gap-x-5 overflow-auto scroll-smooth pl-5 pb-3">
+          {#each filteredProducts as product}
+            {#if product.category?.name === category.name}
+              <Product
+                product={product}
+                paymentChannel={paymentChannel}
+                class="transition-all hover:cursor-pointer hover:shadow-md"
+                on:click={() => dispatch('select-product', product)}
+              />
+            {/if}
+          {/each}
+        </div>
+      </section>
+    {/if}
   {/each}
 </div>
