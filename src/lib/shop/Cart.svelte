@@ -80,7 +80,7 @@
       text-white transition-all focus:bg-blue-600 focus:ring focus:ring-blue-300"
       on:click={() => dispatch('select-payment-channel')}
     >
-      {paymentChannelText[cart.paymentChannel]}
+      ช่องทางชำระเงิน : {paymentChannelText[cart.paymentChannel]}
     </Button>
     <Button
       class="{cart.items.length === 0

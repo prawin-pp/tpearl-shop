@@ -1,12 +1,16 @@
 <script lang="ts">
   import config from 'src/config';
+  import type { TPaymentChannel } from 'src/models/price.model';
   import type { IProduct } from 'src/models/product.model';
   import Tooltip from '../common/Tooltip.svelte';
 
   export { classes as class };
   export let product: IProduct;
+  export let paymentChannel: TPaymentChannel;
 
   let classes: string;
+
+  $: price = product.prices?.find((price) => price.paymentChannel.name === paymentChannel);
 </script>
 
 <div
@@ -32,23 +36,16 @@
       {product.name}
     </span>
     <div class="flex gap-x-1">
-      {#each product.prices as price, i}
-        {#if price.paymentChannel.name !== 'PROMPTPAY'}
-          <Tooltip content={price.paymentChannel.name}>
-            <span
-              class:text-black={price.paymentChannel.name === 'CASH'}
-              class:text-grab={price.paymentChannel.name === 'GRAB'}
-              class:text-lineman={price.paymentChannel.name === 'LINEMAN'}
-              class:text-robinhood={price.paymentChannel.name === 'ROBINHOOD'}
-            >
-              {price.price}
-            </span>
-          </Tooltip>
-          {#if i !== product.prices.length - 1}
-            <span class="text-gray-300">/</span>
-          {/if}
-        {/if}
-      {/each}
+      {#if price}
+        <span
+          class:text-black={price.paymentChannel.name === 'CASH'}
+          class:text-grab={price.paymentChannel.name === 'GRAB'}
+          class:text-lineman={price.paymentChannel.name === 'LINEMAN'}
+          class:text-robinhood={price.paymentChannel.name === 'ROBINHOOD'}
+        >
+          {price.price}
+        </span>
+      {/if}
     </div>
   </div>
 </div>

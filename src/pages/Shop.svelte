@@ -14,17 +14,24 @@
   import numeral from 'numeral';
   import { ToastController } from 'src/utils/toast';
   import { currencyText } from 'src/utils/currency';
+  import { paymentChannelText } from 'src/utils/paymentChannel';
+  import type { ICategory } from 'src/models/category.model';
 
   let confirmDeleteAllProductModal: ConfirmModal;
   let confirmPaymentModal: ConfirmModal;
   let fullScreenPaymentChannel: FullScreenPaymentChannel;
 
   let products: IProduct[] = [];
+  let categories: ICategory[] = [];
   let paymentChannels: IPaymentChannel[] = [];
   let cart: ICart = { items: [], paymentChannel: 'CASH' };
 
   function fetchProducts() {
     api.product.getProducts().then((items) => (products = items));
+  }
+
+  function fetchCategories() {
+    api.category.getCategories().then((items) => (categories = items));
   }
 
   function fetchPaymentChannels() {
@@ -97,12 +104,12 @@
     await createPayment(req);
 
     ToastController.success(
-      'ชำระเงินเรียบร้อย',
+      `ชำระเงินผ่านช่องทาง ${paymentChannelText[cart.paymentChannel]} เรียบร้อย`,
       `ทั้งหมด ${cart.items.length} รายการ ราคา ${currencyText(totalAmount)} บาท`,
       10000
     );
 
-    cart = { ...cart, items: [] };
+    cart = { ...cart, items: [], paymentChannel: 'CASH' };
     confirmPaymentModal.hide();
   }
 
@@ -121,13 +128,19 @@
 
   onMount(() => {
     fetchProducts();
+    fetchCategories();
     fetchPaymentChannels();
   });
 </script>
 
 <div id="shop" class="flex h-full w-full select-none">
   <section class="h-full w-3/4 overflow-hidden bg-gray-100">
-    <ProductList products={products} on:select-product={handleAddProductToCart} />
+    <ProductList
+      products={products}
+      categories={categories}
+      paymentChannel={cart.paymentChannel}
+      on:select-product={handleAddProductToCart}
+    />
   </section>
   <aside class="h-full w-1/4 min-w-[320px] overflow-hidden bg-white">
     <Cart

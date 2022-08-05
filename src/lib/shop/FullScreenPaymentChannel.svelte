@@ -25,7 +25,7 @@
 </script>
 
 {#if visible}
-  <div class="fixed inset-0 flex flex-col items-center justify-center bg-gray-100">
+  <div class="fixed inset-0 flex select-none flex-col items-center justify-center bg-gray-100">
     <div
       class="absolute right-5 top-5 cursor-pointer rounded-xl p-2 text-gray-500 transition hover:bg-gray-200 hover:text-gray-800"
       on:click={hide}

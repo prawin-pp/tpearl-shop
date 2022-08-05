@@ -3,12 +3,14 @@ import client from './client.api';
 import type { IResponseList } from './models/response.model';
 import qs from 'qs';
 import type { IProductResponse } from './models/product.model';
-import config from 'src/config';
 
 export const getProducts = async (): Promise<IProduct[]> => {
   const query = qs.stringify(
     {
       populate: ['image', 'category', 'prices.payment_channel'],
+      pagination: {
+        pageSize: 1000,
+      },
     },
     { encodeValuesOnly: true }
   );
