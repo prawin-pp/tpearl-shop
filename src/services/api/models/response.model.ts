@@ -1,12 +1,9 @@
+import type { IPagination } from 'src/models/pagination.model';
+
 export interface IResponseList<T> {
   data: T[];
   meta: {
-    pagination: {
-      page: number;
-      pageCount: number;
-      pageSize: number;
-      total: number;
-    };
+    pagination: IPagination;
   };
 }
 

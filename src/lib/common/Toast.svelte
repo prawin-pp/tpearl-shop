@@ -21,7 +21,16 @@
   class:bg-red-50={type === 'danger'}
 >
   <div class="flex items-center">
-    <Icon class="pr-2 text-[20px]">info</Icon>
+    <Icon
+      class="
+      {type === 'success' ? 'text-green-700' : ''}
+      {type === 'info' ? 'text-blue-700' : ''}
+      {type === 'warning' ? 'text-yellow-700' : ''}
+      {type === 'danger' ? 'text-red-700' : ''}
+      pr-2 text-[20px]"
+    >
+      info
+    </Icon>
     <h3
       class="text-lg font-medium"
       class:text-green-700={type === 'success'}

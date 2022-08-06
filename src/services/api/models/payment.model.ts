@@ -1,4 +1,3 @@
-import type { IProduct } from 'src/models/product.model';
 import type { IPaymentChannelResponse } from './price.model';
 import type { IProductResponse } from './product.model';
 import type { IResponseData } from './response.model';
@@ -23,13 +22,18 @@ export interface IPaymentResponse {
   id: number;
   attributes: {
     total_amount: number;
-    payment_channel: IResponseData<{ id: number; attributes: { name: string } }>;
+    payment_channel: IResponseData<IPaymentChannelResponse>;
     items: {
       quantity: number;
       price: number;
-      product: IResponseData<{ id: number; attributes: { name: string } }>;
-    };
+      product: IResponseData<IProductResponse>;
+    }[];
     createdAt: string;
     updatedAt: string;
   };
+}
+
+export interface ISearchPaymentCriteria {
+  startAt?: string;
+  endAt?: string;
 }

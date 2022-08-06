@@ -27,3 +27,38 @@ type ModalOption = {
   onShow(): void;
   onToggle(): void;
 };
+
+declare module 'flowbite-datepicker' {
+  export class Datepicker {
+    constructor(targetElement: HTMLElement, options?: DatePickerOption);
+
+    static locales: Record<string, Object>;
+
+    element: HTMLElement;
+  }
+  export class DateRangePicker {
+    constructor(targetElement: HTMLElement, options?: DatePickerOption);
+  }
+
+  export type DatePickerOption = {
+    format?: string;
+    language?: 'en' | 'th';
+    maxDate?: string | 'today' | Date;
+    todayBtn?: boolean;
+    clearBtn?: boolean;
+    autohide?: boolean;
+  };
+}
+
+declare namespace svelte.JSX {
+  interface SvelteInputProps {
+    onchangeDate?: (e: CustomEvent<IDatePickerChangeEvent>) => void;
+  }
+}
+
+interface IDatePickerChangeEvent {
+  date: Date;
+  datepicker: import('flowbite-datepicker').Datepicker;
+  viewDate: Date;
+  viewId: number;
+}

@@ -1,6 +1,9 @@
 import type { ComponentType } from 'svelte';
 import Login from './pages/Login.svelte';
 import Shop from './pages/Shop.svelte';
+import Transaction from './pages/Payment.svelte';
+import Payment from './pages/Payment.svelte';
+import Report from './pages/Report.svelte';
 
 interface Route {
   name: string;
@@ -20,6 +23,18 @@ const routes: Route[] = [
     name: 'shop',
     path: '/shop',
     component: Shop,
+    auth: true,
+  },
+  {
+    name: 'payment',
+    path: '/payment',
+    component: Payment,
+    auth: true,
+  },
+  {
+    name: 'report',
+    path: '/report',
+    component: Report,
     auth: true,
   },
   {

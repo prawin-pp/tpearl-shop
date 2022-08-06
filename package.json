@@ -32,6 +32,8 @@
   },
   "dependencies": {
     "axios": "^0.27.2",
+    "dayjs": "^1.11.4",
+    "flowbite-datepicker": "^1.2.2",
     "numeral": "^2.0.6",
     "page": "^1.11.6",
     "qs": "^6.11.0"

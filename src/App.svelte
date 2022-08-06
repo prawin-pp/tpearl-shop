@@ -53,25 +53,26 @@
 {#if !$user}
   <svelte:component this={page} params={params} location={location} />
 {:else}
-  <div class="grid h-full w-full grid-cols-[64px_1fr] overflow-hidden bg-gray-100">
+  <div class="grid h-full w-full grid-cols-[64px_1fr] overflow-hidden">
     <aside class="z-10 flex h-full flex-col items-center gap-y-2 bg-white py-2 shadow-sm">
       <Icon
-        class="{location?.path === '/shop'
-          ? 'bg-gray-200'
-          : ''} mb-5 cursor-pointer rounded-xl p-2 text-[24px] transition hover:bg-gray-200"
+        class="{location?.path === '/shop' ? 'bg-gray-200' : ''}
+        mb-5 cursor-pointer rounded-xl p-2 text-[24px] transition hover:bg-gray-200"
         on:click={() => navigate('shop')}
       >
         monitor
       </Icon>
       <Icon
-        class="cursor-pointer rounded-xl p-2 text-[24px] transition hover:bg-gray-200"
-        on:click={() => navigate('shop')}
+        class="{location?.path === '/payment' ? 'bg-gray-200' : ''}
+        cursor-pointer rounded-xl p-2 text-[24px] transition hover:bg-gray-200"
+        on:click={() => navigate('payment')}
       >
         payment
       </Icon>
       <Icon
-        class="cursor-pointer rounded-xl p-2 text-[24px] transition hover:bg-gray-200"
-        on:click={() => navigate('shop')}
+        class="{location?.path === '/report' ? 'bg-gray-200' : ''}
+        cursor-pointer rounded-xl p-2 text-[24px] transition hover:bg-gray-200"
+        on:click={() => navigate('report')}
       >
         trending_up
       </Icon>
