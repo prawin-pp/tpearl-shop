@@ -17,21 +17,23 @@
 
 <div
   id={`product-${product.id}`}
-  class={`flex min-w-[250px] select-none flex-col gap-y-2 overflow-hidden rounded-xl bg-white p-3  ${
+  class={`flex w-[250px] select-none flex-col gap-y-2 overflow-hidden rounded-xl bg-white p-3  ${
     classes || ''
   }`}
+  class:bg-gray-200={price.price === 0}
   on:click
 >
-  <span class="overflow-hidden text-ellipsis whitespace-nowrap text-xl">
+  <span class="text-xl line-clamp-1" class:text-gray-500={price.price === 0}>
     {product.name}
   </span>
-  <div class="flex">
+  <div class="mt-auto flex">
     {#if price}
       <span
-        class:text-black={price.paymentChannel.name === 'CASH'}
-        class:text-grab={price.paymentChannel.name === 'GRAB'}
-        class:text-lineman={price.paymentChannel.name === 'LINEMAN'}
-        class:text-robinhood={price.paymentChannel.name === 'ROBINHOOD'}
+        class:text-black={price.price > 0 && price.paymentChannel.name === 'CASH'}
+        class:text-grab={price.price > 0 && price.paymentChannel.name === 'GRAB'}
+        class:text-lineman={price.price > 0 && price.paymentChannel.name === 'LINEMAN'}
+        class:text-robinhood={price.price > 0 && price.paymentChannel.name === 'ROBINHOOD'}
+        class:text-gray-500={price.price === 0}
         class="inline-flex self-end text-xl"
       >
         {currencyText(price.price)}
@@ -44,7 +46,7 @@
           alt={product.image.attributes.alternativeText}
           class="h-full w-full object-contain"
         />
-      {:else}
+      {:else if !product.image && price.price > 0}
         <ImageSkeleton class="h-16 w-16" />
       {/if}
     </div>

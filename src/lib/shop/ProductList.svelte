@@ -20,28 +20,30 @@
       .filter((product) =>
         product.prices?.find((price) => price.paymentChannel.name === paymentChannel)
       )
-      .sort((a, b) => {
-        if (a.prices[0].price < b.prices[0].price) return -1;
-        else if (a.prices[0].price > b.prices[0].price) return 1;
-        return a.name.localeCompare(b.name);
-      });
+      .sort((a, b) => a.name.localeCompare(b.name));
   }
 </script>
 
-<div class="flex h-full flex-col gap-y-5 overflow-y-auto overflow-x-hidden p-5">
+<div class="flex h-full flex-col gap-y-10 overflow-y-auto overflow-x-hidden p-5">
   {#each categories as category}
     {#if filteredProducts.some((product) => product.category?.name === category.name)}
       <section class="flex flex-col gap-y-2.5">
-        <span class="text--500">{category.name || 'อื่นๆ (Other)'}</span>
-        <div class="-ml-5 flex gap-x-5 overflow-auto scroll-smooth pl-5 pb-3">
+        <span class="mb-2.5 text-xl font-bold text-gray-700"
+          >{category.name || 'อื่นๆ (Other)'}</span
+        >
+        <div class="-ml-5 flex flex-wrap gap-5 overflow-auto scroll-smooth pl-5 pb-3">
           {#each filteredProducts as product}
             {#if product.category?.name === category.name}
-              <Product
-                product={product}
-                paymentChannel={paymentChannel}
-                class="transition-all hover:cursor-pointer hover:shadow-md"
-                on:click={() => dispatch('select-product', product)}
-              />
+              {#if product.prices.find((price) => price.paymentChannel.name === paymentChannel).price > 0}
+                <Product
+                  product={product}
+                  paymentChannel={paymentChannel}
+                  class="transition-all hover:cursor-pointer hover:shadow-md"
+                  on:click={() => dispatch('select-product', product)}
+                />
+              {:else}
+                <Product product={product} paymentChannel={paymentChannel} />
+              {/if}
             {/if}
           {/each}
         </div>
