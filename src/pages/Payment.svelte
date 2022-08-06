@@ -8,7 +8,6 @@
   import api from 'src/services/api';
 
   import { onMount } from 'svelte';
-  import Icon from 'src/lib/common/Icon.svelte';
   import { paymentChannelText } from 'src/utils/paymentChannel';
   import { priceText } from 'src/utils/currency';
   import Pagination from 'src/lib/common/Pagination.svelte';
@@ -84,20 +83,8 @@
     <div class="relative overflow-auto">
       <table class="w-full text-left">
         <thead class="bg-gray-50 uppercase text-gray-700">
-          <th scope="col" class="w-0 whitespace-nowrap rounded-tl-xl py-3 px-6">
-            <span class="relative cursor-pointer">
-              วันที่
-              <Icon class="absolute -right-6 -top-1">arrow_drop_up</Icon>
-              <Icon class="absolute -right-6 top-1">arrow_drop_down</Icon>
-            </span>
-          </th>
-          <th scope="col" class="w-0 whitespace-nowrap py-3 px-6">
-            <span class="relative cursor-pointer">
-              เวลา
-              <Icon class="absolute -right-6 -top-1">arrow_drop_up</Icon>
-              <Icon class="absolute -right-6 top-1">arrow_drop_down</Icon>
-            </span>
-          </th>
+          <th scope="col" class="w-0 whitespace-nowrap rounded-tl-xl py-3 px-6">วันที่</th>
+          <th scope="col" class="w-0 whitespace-nowrap py-3 px-6">เวลา</th>
           <th scope="col" class="whitespace-nowrap py-3 px-6">รายการสินค้า</th>
           <th scope="col" class="w-0 whitespace-nowrap py-3 px-6">ช่องทางชำระเงิน</th>
           <th scope="col" class="w-0 whitespace-nowrap py-3 px-6 text-right">ราคารวม</th>
