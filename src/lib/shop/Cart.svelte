@@ -85,7 +85,7 @@
     <Button
       class="{cart.items.length === 0
         ? 'cursor-default bg-gray-200'
-        : 'bg-teal-500 text-white focus:bg-teal-600 focus:ring focus:ring-teal-300'} transition-all"
+        : 'bg-rose-600 text-white focus:bg-rose-600 focus:ring focus:ring-rose-300'} transition-all"
       disabled={cart.items.length === 0}
       on:click={() => dispatch('paid')}
     >
