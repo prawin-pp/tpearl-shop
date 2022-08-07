@@ -9,7 +9,7 @@ export const getProducts = async (): Promise<IProduct[]> => {
     {
       populate: ['image', 'category', 'prices.payment_channel'],
       pagination: {
-        pageSize: 1000,
+        pageSize: 9999,
       },
     },
     { encodeValuesOnly: true }

@@ -8,6 +8,9 @@
   import { user } from 'src/stores/user.store';
   import api from './services/api';
   import Icon from './lib/common/Icon.svelte';
+  import ConfirmModal from './lib/common/ConfirmModal.svelte';
+
+  let confirmLogoutModal: ConfirmModal;
 
   let page: ComponentType;
   let params: Record<string, string>;
@@ -37,6 +40,18 @@
     if (!token) return;
     const me = await api.auth.getMe();
     user.set(me);
+  }
+
+  function handleOpenConfirmLogoutModal() {
+    confirmLogoutModal.show();
+  }
+
+  function handleLogout() {
+    confirmLogoutModal.hide();
+    localStorage.removeItem('tpearl:auth:token');
+    page = null;
+    user.set(null);
+    router.redirect('/');
   }
 
   function navigate(routeName: string) {
@@ -76,6 +91,12 @@
       >
         trending_up
       </Icon>
+      <Icon
+        class="mt-auto cursor-pointer rounded-xl p-2 text-[24px] text-rose-600 transition hover:bg-gray-200"
+        on:click={handleOpenConfirmLogoutModal}
+      >
+        logout
+      </Icon>
     </aside>
     <main class="h-full w-full overflow-hidden">
       <svelte:component this={page} params={params} location={location} />
@@ -85,3 +106,9 @@
 
 <Loading />
 <Notification />
+
+<ConfirmModal
+  bind:this={confirmLogoutModal}
+  title="คุณต้องการที่จะออกจากระบบใช่หรือไม่?"
+  onConfirm={handleLogout}
+/>

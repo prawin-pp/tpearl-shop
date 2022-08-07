@@ -30,7 +30,7 @@
         <input
           type="text"
           id="username"
-          class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-teal-500 focus:ring-teal-500"
+          class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500"
           placeholder="ชื่อผู้ใช้งาน"
           required
           autocomplete="username"
@@ -42,7 +42,7 @@
         <input
           type="password"
           id="current-password"
-          class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-teal-500 focus:ring-teal-500"
+          class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500"
           placeholder="รหัสผ่าน"
           required
           autocomplete="current-password"
@@ -53,7 +53,7 @@
         type="submit"
         class="{isInvalid
           ? 'bg-gray-500 hover:bg-gray-600 focus:ring-gray-300'
-          : 'bg-teal-700 hover:bg-teal-800 focus:ring-teal-300'} w-full font-medium text-white focus:outline-none focus:ring-4"
+          : 'bg-blue-600 hover:bg-blue-800 focus:ring-blue-300'} w-full font-medium text-white focus:outline-none focus:ring-4"
         disabled={isInvalid}
       >
         เข้าสู่ระบบ

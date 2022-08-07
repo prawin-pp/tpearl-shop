@@ -31,6 +31,7 @@
     "vite": "^3.0.0"
   },
   "dependencies": {
+    "apexcharts": "^3.35.4",
     "axios": "^0.27.2",
     "dayjs": "^1.11.4",
     "flowbite-datepicker": "^1.2.2",
