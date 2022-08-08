@@ -103,11 +103,22 @@
               </td>
               <td class="py-4 px-6">
                 {#each payment.items as item}
-                  <div class="whitespace-nowrap">
-                    <span>{item.product.name}</span>
-                    {#if item.quantity > 1}
-                      <span class="text-gray-500">x {item.quantity}</span>
-                    {/if}
+                  <div class="mb-1 last:mb-0">
+                    <div class="whitespace-nowrap">
+                      <span>{item.product.name}</span>
+                      {#if item.quantity > 1}
+                        <span class="text-gray-500">x {item.quantity}</span>
+                      {/if}
+                    </div>
+                    <div class="ml-2 text-gray-500">- หวาน {item.sweetness}%</div>
+                    {#each item.addons as addon}
+                      <div class="ml-2 text-gray-500">
+                        <span>- {addon.product.name}</span>
+                        {#if addon.quantity > 1}
+                          <span class="text-gray-500">x {addon.quantity}</span>
+                        {/if}
+                      </div>
+                    {/each}
                   </div>
                 {/each}
               </td>

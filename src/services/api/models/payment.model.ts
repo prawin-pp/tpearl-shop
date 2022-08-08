@@ -1,6 +1,7 @@
 import type { IPaymentChannelResponse } from './price.model';
 import type { IProductResponse } from './product.model';
-import type { IResponseData } from './response.model';
+import type { IProductAddonResponse } from './productAddon.model';
+import type { IResponseData, IResponseList } from './response.model';
 
 export interface ICreatePaymentRequest {
   items: ICreatePaymentItemRequest[];
@@ -37,10 +38,19 @@ export interface IPaymentResponse {
       quantity: number;
       price: number;
       product: IResponseData<IProductResponse>;
+      addons: IPaymentProductAddonItemResponse[];
+      sweetness: number;
     }[];
     createdAt: string;
     updatedAt: string;
   };
+}
+
+export interface IPaymentProductAddonItemResponse {
+  id: number;
+  quantity: number;
+  price: number;
+  product: IResponseData<IProductAddonResponse>;
 }
 
 export interface ISearchPaymentCriteria {
