@@ -4,6 +4,13 @@
   export interface ICartItem {
     product: IProduct;
     quantity: number;
+    addons: ICartAddonItem[];
+    sweetness: number;
+  }
+
+  export interface ICartAddonItem {
+    product: IProductAddon;
+    quantity: number;
   }
 
   export interface ICartItemEvent {
@@ -20,6 +27,7 @@
   import { currencyText } from 'src/utils/currency';
   import config from 'src/config';
   import ImageSkeleton from '../common/ImageSkeleton.svelte';
+  import type { IProductAddon } from 'src/models/productAddon.model';
 
   const dispatch = createEventDispatcher<ICartItemEvent>();
 
@@ -33,7 +41,15 @@
     const priceByPaymentChannel = item.product.prices.find(
       (price) => price.paymentChannel.name === paymentChannel
     );
+    const productAddonPrice = item.addons.reduce((value, addon) => {
+      const price = addon.product.prices.find(
+        (price) => price.paymentChannel.name === paymentChannel
+      );
+      return value + price.price * addon.quantity;
+    }, 0);
+
     totalAmount = numeral(priceByPaymentChannel?.price || 0)
+      .add(productAddonPrice)
       .multiply(item.quantity)
       .value();
   }
@@ -51,7 +67,22 @@
     {/if}
   </div>
   <div class="grid grid-flow-row auto-rows-min gap-y-1">
-    <span class="line-clamp-2">{item.product.name}</span>
+    <span class="line-clamp-2">
+      {item.product.name}
+    </span>
+    <span class="text-gray-500">- หวาน {item.sweetness}%</span>
+    {#if item.addons.length > 0}
+      <div class="flex flex-col gap-y-1">
+        {#each item.addons as addon}
+          <span class="text-gray-500">
+            - {addon.product.name}
+            {#if addon.quantity > 1}
+              x {addon.quantity}
+            {/if}
+          </span>
+        {/each}
+      </div>
+    {/if}
     <span class="font-bold text-rose-600">{currencyText(totalAmount)}</span>
     <div class="flex items-center gap-4">
       <Icon

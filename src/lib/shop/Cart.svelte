@@ -34,7 +34,15 @@
     const priceByChannel = item.product.prices.find(
       (price) => price.paymentChannel.name === cart.paymentChannel
     );
-    return prev + numeral(priceByChannel.price).multiply(item.quantity).value();
+    const productAddonPrice = item.addons.reduce((value, addon) => {
+      const price = addon.product.prices.find(
+        (price) => price.paymentChannel.name === cart.paymentChannel
+      );
+      return value + price.price * addon.quantity;
+    }, 0);
+    return (
+      prev + numeral(priceByChannel.price).add(productAddonPrice).multiply(item.quantity).value()
+    );
   }, 0);
 </script>
 

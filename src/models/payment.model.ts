@@ -1,5 +1,6 @@
 import type { TPaymentChannel } from './price.model';
 import type { IProduct } from './product.model';
+import type { IProductAddon } from './productAddon.model';
 
 export interface IPayment {
   id: number;
@@ -14,4 +15,12 @@ export interface IPaymentItem {
   quantity: number;
   price: number;
   product: IProduct;
+  addons: IPaymentAddonItems[];
+  sweetness: number;
+}
+
+export interface IPaymentAddonItems {
+  product: IProductAddon;
+  quantity: number;
+  price: number;
 }

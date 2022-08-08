@@ -9,22 +9,31 @@
   import ConfirmModal from 'src/lib/common/ConfirmModal.svelte';
   import FullScreenPaymentChannel from 'src/lib/shop/FullScreenPaymentChannel.svelte';
   import type { IPaymentChannel, TPaymentChannel } from 'src/models/price.model';
-  import type { ICreatePaymentRequest } from 'src/services/api/models/payment.model';
+  import type {
+    ICreatePaymentItemRequest,
+    ICreatePaymentRequest,
+  } from 'src/services/api/models/payment.model';
   import { createPayment } from 'src/services/api/payment.api';
   import numeral from 'numeral';
   import { ToastController } from 'src/utils/toast';
   import { currencyText } from 'src/utils/currency';
   import { paymentChannelText } from 'src/utils/paymentChannel';
   import type { ICategory } from 'src/models/category.model';
+  import type { IProductAddon } from 'src/models/productAddon.model';
+  import ProductAddonModal, { type IProductAddonForm } from 'src/lib/shop/ProductAddonModal.svelte';
 
+  let productAddonModal: ProductAddonModal;
   let confirmDeleteAllProductModal: ConfirmModal;
   let confirmPaymentModal: ConfirmModal;
   let fullScreenPaymentChannel: FullScreenPaymentChannel;
 
   let products: IProduct[] = [];
+  let productAddons: IProductAddon[] = [];
   let categories: ICategory[] = [];
   let paymentChannels: IPaymentChannel[] = [];
   let cart: ICart = { items: [], paymentChannel: 'CASH' };
+
+  let selectedProduct: IProduct;
 
   function fetchProducts() {
     api.product.getProducts().then((items) => (products = items));
@@ -34,19 +43,49 @@
     api.category.getCategories().then((items) => (categories = items));
   }
 
+  function fetchProductAddons() {
+    api.productAddonApi.getProductAddons().then((items) => (productAddons = items));
+  }
+
   function fetchPaymentChannels() {
     api.paymentChannel.getPaymentChannels().then((items) => (paymentChannels = items));
   }
 
-  function handleAddProductToCart(e: CustomEvent<IProduct>) {
-    const product = e.detail;
-    const index = cart.items.findIndex((item) => item.product.id === product.id);
+  function handleOpenProductAddonModal(e: CustomEvent<IProduct>) {
+    selectedProduct = e.detail;
+    productAddonModal.show();
+  }
+
+  function handleAddProductToCart(e: CustomEvent<IProductAddonForm>) {
+    console.log(`cart`, cart);
+    const selectedProductAddon = e.detail;
+    const index = cart.items.findIndex((cartItem) => {
+      const isSameLength = cartItem.addons.length === selectedProductAddon.items.length;
+      const isSameSweetness = cartItem.sweetness === selectedProductAddon.sweetness;
+      const isSameAddonAndQuantity = cartItem.addons.every((addon) => {
+        return selectedProductAddon.items.find((item) => {
+          return item.product.id === addon.product.id && item.quantity === addon.quantity;
+        });
+      });
+      return (
+        cartItem.product.id === selectedProduct.id &&
+        isSameLength &&
+        isSameSweetness &&
+        isSameAddonAndQuantity
+      );
+    });
     if (index >= 0) {
       cart.items[index].quantity++;
     } else {
-      cart.items.push({ product, quantity: 1 });
+      cart.items.push({
+        product: selectedProduct,
+        quantity: 1,
+        addons: selectedProductAddon.items,
+        sweetness: selectedProductAddon.sweetness,
+      });
     }
     cart = { ...cart };
+    productAddonModal.hide();
   }
 
   function handleIncreaseProductQuantity(e: CustomEvent<ICartItem>) {
@@ -76,22 +115,36 @@
   }
 
   async function handleCreatePayment() {
-    const items = cart.items.map((item) => ({
+    const items = cart.items.map<ICreatePaymentItemRequest>((item) => ({
       product: {
         id: item.product.id,
       },
       price: item.product.prices.find((price) => price.paymentChannel.name === cart.paymentChannel)
         .price,
       quantity: item.quantity,
+      addons: item.addons.map((addon) => ({
+        product: {
+          id: addon.product.id,
+        },
+        quantity: addon.quantity,
+        price: addon.product.prices.find(
+          (price) => price.paymentChannel.name === cart.paymentChannel
+        ).price,
+      })),
+      sweetness: item.sweetness,
     }));
     const totalAmount = cart.items.reduce((prev, item) => {
-      return numeral(item.quantity)
-        .multiply(
-          item.product.prices.find((price) => price.paymentChannel.name === cart.paymentChannel)
-            .price
-        )
-        .add(prev)
-        .value();
+      const addonAmount = item.addons.reduce((value, addon) => {
+        const { price } = addon.product.prices.find(
+          (price) => price.paymentChannel.name === cart.paymentChannel
+        );
+        return value + price * addon.quantity;
+      }, 0);
+      const { price } = item.product.prices.find(
+        (price) => price.paymentChannel.name === cart.paymentChannel
+      );
+      const amount = (price + addonAmount) * item.quantity;
+      return prev + amount;
     }, 0);
     const req: ICreatePaymentRequest = {
       items: items,
@@ -130,6 +183,7 @@
     fetchProducts();
     fetchCategories();
     fetchPaymentChannels();
+    fetchProductAddons();
   });
 </script>
 
@@ -139,7 +193,7 @@
       products={products}
       categories={categories}
       paymentChannel={cart.paymentChannel}
-      on:select-product={handleAddProductToCart}
+      on:select-product={handleOpenProductAddonModal}
     />
   </section>
   <aside class="h-full w-1/4 min-w-[320px] overflow-hidden bg-white">
@@ -169,4 +223,12 @@
 <FullScreenPaymentChannel
   bind:this={fullScreenPaymentChannel}
   on:select-payment-channel={handleUpdatePaymentChannel}
+/>
+
+<ProductAddonModal
+  bind:this={productAddonModal}
+  title={selectedProduct?.name}
+  productAddons={productAddons}
+  paymentChannel={cart.paymentChannel}
+  on:submit={handleAddProductToCart}
 />

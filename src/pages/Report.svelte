@@ -23,9 +23,14 @@
   $: totalAmount = payments.reduce((value, payment) => value + payment.totalAmount, 0);
 
   $: totalAmountGroupByPaymentChannel = payments.reduce((value, payment) => {
-    value[payment.paymentChannel] = (value[payment.paymentChannel] || 0) + payment.totalAmount;
+    const quantity = payment.items.reduce((value, item) => value + item.quantity, 0);
+    const sales = {
+      amount: (value[payment.paymentChannel]?.amount || 0) + payment.totalAmount,
+      quantity: (value[payment.paymentChannel]?.quantity || 0) + quantity,
+    };
+    value[payment.paymentChannel] = sales;
     return value;
-  }, {} as Record<TPaymentChannel, number>);
+  }, {} as Record<TPaymentChannel, { amount: number; quantity: number }>);
 
   function handleChangeDateRange(e: CustomEvent<IDateRangePickerEvent['change']>) {
     searchCriteria = { ...e.detail };
@@ -47,7 +52,10 @@
   });
 </script>
 
-<div id="report" class="flex h-full w-full select-none flex-col gap-y-5 bg-gray-100 py-6">
+<div
+  id="report"
+  class="flex h-full w-full select-none flex-col gap-y-5 overflow-auto bg-gray-100 py-6"
+>
   <section class="px-5">
     <span class="text-xl font-bold text-gray-700">สรุปยอดขาย</span>
   </section>
@@ -68,31 +76,68 @@
     <div class="flex flex-col gap-y-1 overflow-hidden rounded-xl bg-cash px-6 py-5 text-white">
       <span class="block whitespace-nowrap text-xl">{paymentChannelText['CASH']}</span>
       <span class="block whitespace-nowrap text-4xl">
-        {currencyText(totalAmountGroupByPaymentChannel['CASH'] || 0)}
+        {currencyText(totalAmountGroupByPaymentChannel['CASH']?.amount || 0)}
       </span>
     </div>
     <div class="flex flex-col gap-y-1 overflow-hidden rounded-xl bg-promptpay px-6 py-5 text-white">
       <span class="block whitespace-nowrap text-xl">{paymentChannelText['PROMPTPAY']}</span>
       <span class="block whitespace-nowrap text-4xl">
-        {currencyText(totalAmountGroupByPaymentChannel['PROMPTPAY'] || 0)}
+        {currencyText(totalAmountGroupByPaymentChannel['PROMPTPAY']?.amount || 0)}
       </span>
     </div>
     <div class="flex flex-col gap-y-1 overflow-hidden rounded-xl bg-grab px-6 py-5 text-white">
       <span class="block whitespace-nowrap text-xl">{paymentChannelText['GRAB']}</span>
       <span class="block whitespace-nowrap text-4xl">
-        {currencyText(totalAmountGroupByPaymentChannel['GRAB'] || 0)}
+        {currencyText(totalAmountGroupByPaymentChannel['GRAB']?.amount || 0)}
       </span>
     </div>
     <div class="flex flex-col gap-y-1 overflow-hidden rounded-xl bg-lineman px-6 py-5 text-white">
       <span class="block whitespace-nowrap text-xl">{paymentChannelText['LINEMAN']}</span>
       <span class="block whitespace-nowrap text-4xl">
-        {currencyText(totalAmountGroupByPaymentChannel['LINEMAN'] || 0)}
+        {currencyText(totalAmountGroupByPaymentChannel['LINEMAN']?.amount || 0)}
       </span>
     </div>
     <div class="flex flex-col gap-y-1 overflow-hidden rounded-xl bg-robinhood px-6 py-5 text-white">
       <span class="block whitespace-nowrap text-xl">{paymentChannelText['ROBINHOOD']}</span>
       <span class="block whitespace-nowrap text-4xl">
-        {currencyText(totalAmountGroupByPaymentChannel['ROBINHOOD'] || 0)}
+        {currencyText(totalAmountGroupByPaymentChannel['ROBINHOOD']?.amount || 0)}
+      </span>
+    </div>
+  </section>
+  <section class="grid grid-cols-5 gap-x-6 px-5">
+    <div class="flex flex-col gap-y-1 overflow-hidden rounded-xl bg-cash px-6 py-5 text-white">
+      <span class="block whitespace-nowrap text-xl">{paymentChannelText['CASH']}</span>
+      <span class="block whitespace-nowrap text-4xl">
+        {totalAmountGroupByPaymentChannel['CASH']?.quantity || 0}
+        <span class="text-right text-base">แก้ว</span>
+      </span>
+    </div>
+    <div class="flex flex-col gap-y-1 overflow-hidden rounded-xl bg-promptpay px-6 py-5 text-white">
+      <span class="block whitespace-nowrap text-xl">{paymentChannelText['PROMPTPAY']}</span>
+      <span class="block whitespace-nowrap text-4xl">
+        {totalAmountGroupByPaymentChannel['PROMPTPAY']?.quantity || 0}
+        <span class="text-right text-base">แก้ว</span>
+      </span>
+    </div>
+    <div class="flex flex-col gap-y-1 overflow-hidden rounded-xl bg-grab px-6 py-5 text-white">
+      <span class="block whitespace-nowrap text-xl">{paymentChannelText['GRAB']}</span>
+      <span class="block whitespace-nowrap text-4xl">
+        {totalAmountGroupByPaymentChannel['GRAB']?.quantity || 0}
+        <span class="text-right text-base">แก้ว</span>
+      </span>
+    </div>
+    <div class="flex flex-col gap-y-1 overflow-hidden rounded-xl bg-lineman px-6 py-5 text-white">
+      <span class="block whitespace-nowrap text-xl">{paymentChannelText['LINEMAN']}</span>
+      <span class="block whitespace-nowrap text-4xl">
+        {totalAmountGroupByPaymentChannel['LINEMAN']?.quantity || 0}
+        <span class="text-right text-base">แก้ว</span>
+      </span>
+    </div>
+    <div class="flex flex-col gap-y-1 overflow-hidden rounded-xl bg-robinhood px-6 py-5 text-white">
+      <span class="block whitespace-nowrap text-xl">{paymentChannelText['ROBINHOOD']}</span>
+      <span class="block whitespace-nowrap text-4xl">
+        {totalAmountGroupByPaymentChannel['ROBINHOOD']?.quantity || 0}
+        <span class="text-right text-base">แก้ว</span>
       </span>
     </div>
   </section>

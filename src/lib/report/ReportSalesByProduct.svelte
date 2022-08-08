@@ -97,7 +97,7 @@
       },
       y: {
         formatter: function (value) {
-          return `${value} ชิ้น`;
+          return `${value} แก้ว`;
         },
       },
     },

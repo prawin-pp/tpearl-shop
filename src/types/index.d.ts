@@ -50,15 +50,15 @@ declare module 'flowbite-datepicker' {
   };
 }
 
-declare namespace svelte.JSX {
-  interface SvelteInputProps {
-    onchangeDate?: (e: CustomEvent<IDatePickerChangeEvent>) => void;
-  }
-}
-
 interface IDatePickerChangeEvent {
   date: Date;
   datepicker: import('flowbite-datepicker').Datepicker;
   viewDate: Date;
   viewId: number;
+}
+
+declare namespace svelte.JSX {
+  interface SvelteInputProps {
+    onchangeDate?: (e: CustomEvent<IDatePickerChangeEvent>) => void;
+  }
 }

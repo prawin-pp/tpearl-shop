@@ -16,6 +16,16 @@ export interface ICreatePaymentItemRequest {
   };
   quantity: number;
   price: number;
+  addons: ICreatePaymentAddonItemRequest[];
+  sweetness: number;
+}
+
+export interface ICreatePaymentAddonItemRequest {
+  product: {
+    id: number;
+  };
+  quantity: number;
+  price: number;
 }
 
 export interface IPaymentResponse {
