@@ -57,7 +57,6 @@
   }
 
   function handleAddProductToCart(e: CustomEvent<IProductAddonForm>) {
-    console.log(`cart`, cart);
     const selectedProductAddon = e.detail;
     const index = cart.items.findIndex((cartItem) => {
       const isSameLength = cartItem.addons.length === selectedProductAddon.items.length;

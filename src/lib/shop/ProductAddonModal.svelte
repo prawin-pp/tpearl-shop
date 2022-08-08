@@ -86,7 +86,6 @@
 
   function handleConfirm() {
     const filteredItems = items.filter((item) => item.quantity > 0);
-    console.log(`confirm`, filteredItems);
     dispatch('submit', { items: [...filteredItems], sweetness: sweetness });
   }
 </script>
@@ -150,7 +149,7 @@
     </section>
     <section id="select-topping" class="flex flex-col gap-y-4">
       <span>กรุณาเลือกท็อปปิ้ง</span>
-      <div class="flex flex-col gap-y-5 rounded-xl">
+      <div class="grid grid-cols-2 gap-5 rounded-xl">
         {#each items as item}
           <div class="grid grid-cols-[96px_1fr]">
             <div class="h-24 w-24 overflow-hidden rounded-xl bg-white">
