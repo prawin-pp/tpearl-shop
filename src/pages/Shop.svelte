@@ -165,6 +165,10 @@
     confirmPaymentModal.hide();
   }
 
+  function handleScrollToElement(selector) {
+    document.querySelector(selector)?.scrollIntoView({ behavior: 'smooth' });
+  }
+
   function handleOpenConfirmClearAllProductModal() {
     if (cart.items.length === 0) return;
     confirmDeleteAllProductModal.show();
@@ -187,7 +191,17 @@
 </script>
 
 <div id="shop" class="flex h-full w-full select-none">
-  <section class="h-full w-3/4 overflow-hidden bg-gray-100">
+  <section class="flex h-full w-3/4 flex-col overflow-hidden bg-gray-100">
+    <div class="flex gap-4 overflow-x-auto px-5 py-3 shadow-sm">
+      {#each categories as category}
+        <div
+          class="flex items-center justify-center whitespace-nowrap rounded-xl bg-white px-4 py-2 text-gray-600 transition hover:shadow"
+          on:click={() => handleScrollToElement(`#section-category-${category.id}`)}
+        >
+          {category.name.split(' ')[0]}
+        </div>
+      {/each}
+    </div>
     <ProductList
       products={products}
       categories={categories}

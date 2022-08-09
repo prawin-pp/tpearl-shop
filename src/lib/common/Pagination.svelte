@@ -35,43 +35,39 @@
 
 <ul class="inline-flex items-center -space-x-px">
   <li>
-    <a
-      href="#"
+    <div
       class="flex h-10 w-10 items-center justify-center rounded-l-xl border border-gray-300 bg-white leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700"
       on:click={() => handleGoToPage(1)}
     >
       <span class="sr-only">First Page</span>
       <Icon>first_page</Icon>
-    </a>
+    </div>
   </li>
   <li>
-    <a
-      href="#"
+    <div
       class="flex h-10 w-10 items-center justify-center border border-gray-300 bg-white leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700"
       on:click={handlePreviousPage}
     >
       <span class="sr-only">Previous</span>
       <Icon>navigate_before</Icon>
-    </a>
+    </div>
   </li>
   <li>
-    <a
-      href="#"
+    <div
       class="flex h-10 w-10 items-center justify-center border border-gray-300 bg-white leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700"
       on:click={handleNextPage}
     >
       <span class="sr-only">Next</span>
       <Icon>navigate_next</Icon>
-    </a>
+    </div>
   </li>
   <li>
-    <a
-      href="#"
+    <div
       class="flex h-10 w-10 items-center justify-center rounded-r-xl border border-gray-300 bg-white leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700"
       on:click={() => handleGoToPage(pagination.pageCount)}
     >
       <span class="sr-only">Last Page</span>
       <Icon>last_page</Icon>
-    </a>
+    </div>
   </li>
 </ul>

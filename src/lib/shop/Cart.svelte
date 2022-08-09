@@ -85,10 +85,10 @@
       {cart.paymentChannel === 'GRAB' ? 'bg-grab' : ''}
       {cart.paymentChannel === 'LINEMAN' ? 'bg-lineman' : ''}
       {cart.paymentChannel === 'ROBINHOOD' ? 'bg-robinhood' : ''}
-      text-white transition-all focus:bg-blue-600 focus:ring focus:ring-blue-300"
+      text-white transition-all"
       on:click={() => dispatch('select-payment-channel')}
     >
-      ช่องทางชำระเงิน : {paymentChannelText[cart.paymentChannel]}
+      {paymentChannelText[cart.paymentChannel]}
     </Button>
     <Button
       class="{cart.items.length === 0
@@ -97,7 +97,7 @@
       disabled={cart.items.length === 0}
       on:click={() => dispatch('paid')}
     >
-      ชำระเงิน
+      ชำระเงิน {currencyText(totalAmount)}
     </Button>
   </section>
 </div>

@@ -21,6 +21,9 @@
   };
 
   $: totalAmount = payments.reduce((value, payment) => value + payment.totalAmount, 0);
+  $: totalQuantiy = payments.reduce((value, payment) => {
+    return value + payment.items.reduce((prev, item) => prev + item.quantity, 0);
+  }, 0);
 
   $: totalAmountGroupByPaymentChannel = payments.reduce((value, payment) => {
     const quantity = payment.items.reduce((value, item) => value + item.quantity, 0);
@@ -66,10 +69,14 @@
       on:change={handleChangeDateRange}
     />
   </section>
-  <section class="grid grid-cols-5 gap-x-6 px-5">
-    <div class="col-span-5 flex flex-col gap-y-1 overflow-hidden rounded-xl bg-white px-6 py-5">
+  <section class="grid grid-cols-2 gap-x-6 px-5">
+    <div class="flex flex-col gap-y-1 overflow-hidden rounded-xl bg-white px-6 py-5">
       <span class="block whitespace-nowrap text-xl text-gray-500">ยอดขายรวม</span>
       <span class="block whitespace-nowrap text-4xl">{currencyText(totalAmount)}</span>
+    </div>
+    <div class="flex flex-col gap-y-1 overflow-hidden rounded-xl bg-white px-6 py-5">
+      <span class="block whitespace-nowrap text-xl text-gray-500">จำนวนแก้ว</span>
+      <span class="block whitespace-nowrap text-4xl">{totalQuantiy}</span>
     </div>
   </section>
   <section class="grid grid-cols-5 gap-x-6 px-5">

@@ -4,7 +4,6 @@
   import type { IProduct } from 'src/models/product.model';
   import { currencyText } from 'src/utils/currency';
   import ImageSkeleton from '../common/ImageSkeleton.svelte';
-  import Tooltip from '../common/Tooltip.svelte';
 
   export { classes as class };
   export let product: IProduct;

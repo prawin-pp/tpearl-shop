@@ -27,11 +27,11 @@
 <div class="flex h-full flex-col gap-y-10 overflow-y-auto overflow-x-hidden p-5">
   {#each categories as category}
     {#if filteredProducts.some((product) => product.category?.name === category.name)}
-      <section class="flex flex-col gap-y-2.5">
-        <span class="mb-2.5 text-xl font-bold text-gray-700"
-          >{category.name || 'อื่นๆ (Other)'}</span
-        >
-        <div class="-ml-5 flex flex-wrap gap-5 overflow-auto scroll-smooth pl-5 pb-3">
+      <section id="section-category-{category.id}" class="flex flex-col gap-y-2.5">
+        <span class="mb-2.5 text-xl font-bold text-gray-700">
+          {category.name || 'อื่นๆ (Other)'}
+        </span>
+        <div class="-ml-5 flex flex-wrap gap-5 pl-5 pb-3">
           {#each filteredProducts as product}
             {#if product.category?.name === category.name}
               {#if product.prices.find((price) => price.paymentChannel.name === paymentChannel).price > 0}

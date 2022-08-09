@@ -137,13 +137,12 @@
                 {priceText(payment.totalAmount)}
               </td>
               <td class="py-4 px-6 group-last:rounded-br-xl">
-                <a
-                  href="#"
+                <div
                   class="text-rose-600 hover:underline"
                   on:click={() => handleOpenConfirmDeletePaymentModal(payment)}
                 >
                   ลบ
-                </a>
+                </div>
               </td>
             </tr>
           {/each}

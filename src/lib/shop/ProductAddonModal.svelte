@@ -26,6 +26,7 @@
   import ImageSkeleton from '../common/ImageSkeleton.svelte';
 
   import Modal from '../common/Modal.svelte';
+  import Product from './Product.svelte';
 
   const dispatch = createEventDispatcher<IProductAddonModalEvent>();
 
@@ -108,16 +109,6 @@
         <button
           type="button"
           class="flex-1 border-t border-b border-r border-gray-200 bg-white py-2 px-4 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-rose-600 focus:z-10 focus:text-rose-600 focus:ring-2 focus:ring-rose-600"
-          class:ring-rose-600={sweetness === 25}
-          class:ring-2={sweetness === 25}
-          class:z-10={sweetness === 25}
-          on:click={() => handleChangeSweetness(25)}
-        >
-          25%
-        </button>
-        <button
-          type="button"
-          class="flex-1 border-t border-b border-r border-gray-200 bg-white py-2 px-4 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-rose-600 focus:z-10 focus:text-rose-600 focus:ring-2 focus:ring-rose-600"
           class:ring-rose-600={sweetness === 50}
           class:ring-2={sweetness === 50}
           class:z-10={sweetness === 50}
@@ -127,17 +118,7 @@
         </button>
         <button
           type="button"
-          class="flex-1 border-t border-b border-gray-200 bg-white py-2 px-4 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-rose-600 focus:z-10 focus:text-rose-600 focus:ring-2 focus:ring-rose-600"
-          class:ring-rose-600={sweetness === 75}
-          class:ring-2={sweetness === 75}
-          class:z-10={sweetness === 75}
-          on:click={() => handleChangeSweetness(75)}
-        >
-          75%
-        </button>
-        <button
-          type="button"
-          class="flex-1 rounded-r-xl border border-gray-200 bg-white py-2 px-4 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-rose-600 focus:z-10 focus:text-rose-600 focus:ring-2 focus:ring-rose-600"
+          class="flex-1 border-t border-b border-r border-gray-200 bg-white py-2 px-4 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-rose-600 focus:z-10 focus:text-rose-600 focus:ring-2 focus:ring-rose-600"
           class:ring-rose-600={sweetness === 100}
           class:ring-2={sweetness === 100}
           class:z-10={sweetness === 100}
@@ -145,13 +126,33 @@
         >
           100%
         </button>
+        <button
+          type="button"
+          class="flex-1 border-t border-b border-r border-gray-200 bg-white py-2 px-4 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-rose-600 focus:z-10 focus:text-rose-600 focus:ring-2 focus:ring-rose-600"
+          class:ring-rose-600={sweetness === 150}
+          class:ring-2={sweetness === 150}
+          class:z-10={sweetness === 150}
+          on:click={() => handleChangeSweetness(150)}
+        >
+          150%
+        </button>
+        <button
+          type="button"
+          class="flex-1 rounded-r-xl border border-gray-200 bg-white py-2 px-4 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-rose-600 focus:z-10 focus:text-rose-600 focus:ring-2 focus:ring-rose-600"
+          class:ring-rose-600={sweetness === 200}
+          class:ring-2={sweetness === 200}
+          class:z-10={sweetness === 200}
+          on:click={() => handleChangeSweetness(200)}
+        >
+          200%
+        </button>
       </div>
     </section>
     <section id="select-topping" class="flex flex-col gap-y-4">
       <span>กรุณาเลือกท็อปปิ้ง</span>
       <div class="grid grid-cols-2 gap-5 rounded-xl">
         {#each items as item}
-          <div class="grid grid-cols-[96px_1fr]">
+          <div class="grid grid-cols-[96px_1fr] rounded-xl bg-gray-50 p-4">
             <div class="h-24 w-24 overflow-hidden rounded-xl bg-white">
               {#if item.product.image}
                 <img
@@ -163,28 +164,35 @@
               {/if}
             </div>
             <div class="grid grid-flow-row auto-rows-min gap-y-1">
-              <span class="pl-4 line-clamp-2">{item.product.name}</span>
-              <span class="pl-4 font-bold text-rose-600">
+              <span class="pl-4 line-clamp-2" class:text-gray-500={prices[item.product.id] === 0}>
+                {item.product.name}
+              </span>
+              <span
+                class="pl-4 font-bold text-rose-600"
+                class:text-gray-500={prices[item.product.id] === 0}
+              >
                 {priceText(prices[item.product.id])}
                 {#if item.quantity > 0}
                   x {item.quantity} = {currencyText(prices[item.product.id] * item.quantity)}
                 {/if}
               </span>
-              <div class="flex items-center gap-4 pl-4">
-                <Icon
-                  class="cursor-pointer rounded-xl bg-gray-200 p-2 text-gray-600 transition hover:bg-gray-300"
-                  on:click={() => handleDecreaseQuantity(item)}
-                >
-                  remove
-                </Icon>
-                <span>{item.quantity}</span>
-                <Icon
-                  class="cursor-pointer rounded-xl bg-gray-200 p-2 text-gray-600 transition hover:bg-gray-300"
-                  on:click={() => handleIncreaseQuantity(item)}
-                >
-                  add
-                </Icon>
-              </div>
+              {#if prices[item.product.id] > 0}
+                <div class="flex items-center gap-4 pl-4">
+                  <Icon
+                    class="cursor-pointer rounded-xl bg-gray-200 p-2 text-gray-600 transition hover:bg-gray-300"
+                    on:click={() => handleDecreaseQuantity(item)}
+                  >
+                    remove
+                  </Icon>
+                  <span>{item.quantity}</span>
+                  <Icon
+                    class="cursor-pointer rounded-xl bg-gray-200 p-2 text-gray-600 transition hover:bg-gray-300"
+                    on:click={() => handleIncreaseQuantity(item)}
+                  >
+                    add
+                  </Icon>
+                </div>
+              {/if}
             </div>
           </div>
         {/each}
