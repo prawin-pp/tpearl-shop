@@ -38,6 +38,7 @@ declare module 'flowbite-datepicker' {
   }
   export class DateRangePicker {
     constructor(targetElement: HTMLElement, options?: DatePickerOption);
+    destroy(): void;
   }
 
   export type DatePickerOption = {

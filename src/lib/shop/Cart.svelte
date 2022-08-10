@@ -59,7 +59,7 @@
       clear
     </Icon>
   </section>
-  <section class="overflow-auto">
+  <section class="flex-1 overflow-auto">
     {#each cart.items as item}
       <CartItem
         class="transition hover:bg-gray-100"

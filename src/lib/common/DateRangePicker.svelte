@@ -6,7 +6,7 @@
 
 <script lang="ts">
   import { DateRangePicker } from 'flowbite-datepicker';
-  import { createEventDispatcher, onMount } from 'svelte';
+  import { createEventDispatcher, onDestroy, onMount } from 'svelte';
   import Icon from './Icon.svelte';
   import dayjs from 'dayjs';
 
@@ -36,6 +36,10 @@
       language: 'th',
       autohide: true,
     });
+  });
+
+  onDestroy(() => {
+    dateRangePicker?.destroy();
   });
 </script>
 
