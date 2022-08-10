@@ -39,21 +39,16 @@
     api.product.getProducts().then((items) => (products = items));
   }
 
-  function fetchCategories() {
-    api.category.getCategories().then((items) => (categories = items));
-  }
-
   function fetchProductAddons() {
     api.productAddonApi.getProductAddons().then((items) => (productAddons = items));
   }
 
-  function fetchPaymentChannels() {
-    api.paymentChannel.getPaymentChannels().then((items) => (paymentChannels = items));
+  function fetchCategories() {
+    api.category.getCategories().then((items) => (categories = items));
   }
 
-  function handleOpenProductAddonModal(e: CustomEvent<IProduct>) {
-    selectedProduct = e.detail;
-    productAddonModal.show();
+  function fetchPaymentChannels() {
+    api.paymentChannel.getPaymentChannels().then((items) => (paymentChannels = items));
   }
 
   function handleAddProductToCart(e: CustomEvent<IProductAddonForm>) {
@@ -182,6 +177,11 @@
     fullScreenPaymentChannel.show();
   }
 
+  function handleOpenProductAddonModal(e: CustomEvent<IProduct>) {
+    selectedProduct = e.detail;
+    productAddonModal.show();
+  }
+
   onMount(() => {
     fetchProducts();
     fetchCategories();
@@ -209,7 +209,7 @@
       on:select-product={handleOpenProductAddonModal}
     />
   </section>
-  <aside class="h-full w-1/4 min-w-[320px] overflow-hidden bg-white">
+  <div class="h-full w-1/4 min-w-[320px] overflow-hidden bg-white">
     <Cart
       cart={cart}
       on:increase-quantity={handleIncreaseProductQuantity}
@@ -218,7 +218,7 @@
       on:select-payment-channel={handleOpenFullScreenPaymentChannel}
       on:paid={handleOpenPaymentConfirmModal}
     />
-  </aside>
+  </div>
 </div>
 
 <ConfirmModal

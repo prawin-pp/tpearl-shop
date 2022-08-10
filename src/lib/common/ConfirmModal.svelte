@@ -36,13 +36,13 @@
 
   onMount(() => {
     modal = new Modal(popupElement);
-    modal.hide();
   });
 </script>
 
 <div
   id="popup-modal"
   tabindex="-1"
+  aria-hidden="true"
   class="fixed top-0 right-0 left-0 z-50 hidden h-modal overflow-y-auto overflow-x-hidden md:inset-0 md:h-full"
   bind:this={popupElement}
 >

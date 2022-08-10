@@ -2,8 +2,10 @@
   import router from 'page';
 
   import Button from 'src/lib/common/Button.svelte';
+  import Toast from 'src/lib/common/Toast.svelte';
   import api from 'src/services/api';
   import { store } from 'src/stores';
+  import { ToastController } from 'src/utils/toast';
 
   let username: string;
   let password: string;
@@ -11,18 +13,22 @@
   $: isInvalid = !username || !password;
 
   function handleLogin(e: Event) {
-    e.preventDefault();
     if (isInvalid) return;
-    api.auth.login(username, password).then((user) => {
-      store.user.user.set(user);
-      router.redirect('/');
-    });
+    api.auth
+      .login(username, password)
+      .then((user) => {
+        store.user.user.set(user);
+        router.redirect('/');
+      })
+      .catch(() => {
+        ToastController.danger('เข้าสู่ระบบไม่สำเร็จ', '');
+      });
   }
 </script>
 
 <section id="login" class="h-full w-full overflow-auto bg-gray-100">
   <div class="mx-auto my-20 w-[550px] rounded-xl bg-white px-14 py-12 shadow">
-    <form action="#" novalidate on:submit={handleLogin}>
+    <form action="#" novalidate on:submit|preventDefault={handleLogin}>
       <div class="mb-2 text-center text-xl font-bold">ยินดีต้อนรับสู่ร้าน Tpearl</div>
       <div class="mb-10 text-center text-gray-900">กรุณาเข้าสู่ระบบก่อนใช้งาน</div>
       <div class="mb-6">

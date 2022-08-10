@@ -7,8 +7,8 @@
   import Notification from './lib/Notification.svelte';
   import { user } from 'src/stores/user.store';
   import api from './services/api';
-  import Icon from './lib/common/Icon.svelte';
   import ConfirmModal from './lib/common/ConfirmModal.svelte';
+  import Menu from './Menu.svelte';
 
   let confirmLogoutModal: ConfirmModal;
 
@@ -42,6 +42,11 @@
     user.set(me);
   }
 
+  function handleRedirectTo(e: CustomEvent<string>) {
+    const path = e.detail;
+    router.redirect(path);
+  }
+
   function handleOpenConfirmLogoutModal() {
     confirmLogoutModal.show();
   }
@@ -54,11 +59,6 @@
     router.redirect('/');
   }
 
-  function navigate(routeName: string) {
-    const route = routes.find((route) => route.name === routeName);
-    if (route) router.redirect(route.path);
-  }
-
   onMount(async () => {
     await fetchUser();
     setupRouter();
@@ -69,38 +69,14 @@
   <svelte:component this={page} params={params} location={location} />
 {:else}
   <div class="grid h-full w-full grid-cols-[64px_1fr] overflow-hidden">
-    <aside class="z-10 flex h-full flex-col items-center gap-y-2 bg-white py-2 shadow-sm">
-      <Icon
-        class="{location?.path === '/shop' ? 'bg-gray-200' : ''}
-        mb-5 cursor-pointer rounded-xl p-2 text-[24px] transition hover:bg-gray-200"
-        on:click={() => navigate('shop')}
-      >
-        monitor
-      </Icon>
-      <Icon
-        class="{location?.path === '/payment' ? 'bg-gray-200' : ''}
-        cursor-pointer rounded-xl p-2 text-[24px] transition hover:bg-gray-200"
-        on:click={() => navigate('payment')}
-      >
-        payment
-      </Icon>
-      <Icon
-        class="{location?.path === '/report' ? 'bg-gray-200' : ''}
-        cursor-pointer rounded-xl p-2 text-[24px] transition hover:bg-gray-200"
-        on:click={() => navigate('report')}
-      >
-        trending_up
-      </Icon>
-      <Icon
-        class="mt-auto cursor-pointer rounded-xl p-2 text-[24px] text-rose-600 transition hover:bg-gray-200"
-        on:click={handleOpenConfirmLogoutModal}
-      >
-        logout
-      </Icon>
-    </aside>
-    <main class="h-full w-full overflow-hidden">
+    <Menu
+      location={location}
+      on:redirect={handleRedirectTo}
+      on:logout={handleOpenConfirmLogoutModal}
+    />
+    <div class="h-full w-full overflow-hidden">
       <svelte:component this={page} params={params} location={location} />
-    </main>
+    </div>
   </div>
 {/if}
 

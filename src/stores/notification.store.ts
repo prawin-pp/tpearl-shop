@@ -19,7 +19,7 @@ function createNotifications() {
 
       setTimeout(() => {
         update((list) => list.filter((item) => item !== notification));
-      }, notification.timeout || 3000);
+      }, notification.timeout || 5000);
     },
     reset: () => set([]),
   };
