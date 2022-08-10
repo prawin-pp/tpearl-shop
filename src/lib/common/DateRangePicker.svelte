@@ -5,10 +5,10 @@
 </script>
 
 <script lang="ts">
+  import dayjs from 'dayjs';
   import { DateRangePicker } from 'flowbite-datepicker';
   import { createEventDispatcher, onDestroy, onMount } from 'svelte';
   import Icon from './Icon.svelte';
-  import dayjs from 'dayjs';
 
   const dispatch = createEventDispatcher<IDateRangePickerEvent>();
 

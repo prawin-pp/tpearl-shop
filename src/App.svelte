@@ -1,14 +1,14 @@
 <script lang="ts">
-  import { onMount, type ComponentType } from 'svelte';
   import router from 'page';
+  import { onMount, type ComponentType } from 'svelte';
 
-  import routes from 'src/routes';
   import Loading from 'src/lib/Loading.svelte';
-  import Notification from './lib/Notification.svelte';
+  import routes from 'src/routes';
   import { user } from 'src/stores/user.store';
-  import api from './services/api';
   import ConfirmModal from './lib/common/ConfirmModal.svelte';
+  import Notification from './lib/Notification.svelte';
   import Menu from './Menu.svelte';
+  import api from './services/api';
 
   let confirmLogoutModal: ConfirmModal;
 

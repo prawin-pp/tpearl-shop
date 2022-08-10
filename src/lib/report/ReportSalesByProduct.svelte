@@ -7,8 +7,8 @@
 </script>
 
 <script lang="ts">
-  import type { IPayment } from 'src/models/payment.model';
   import ApexCharts, { type ApexOptions } from 'apexcharts';
+  import type { IPayment } from 'src/models/payment.model';
   import { onMount } from 'svelte';
 
   export let payments: IPayment[] = [];

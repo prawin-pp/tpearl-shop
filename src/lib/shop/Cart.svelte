@@ -18,10 +18,10 @@
   import { currencyText } from 'src/utils/currency';
   import { createEventDispatcher } from 'svelte';
 
-  import CartItem, { type ICartItem } from './CartItem.svelte';
+  import { paymentChannelText } from 'src/utils/paymentChannel';
   import Button from '../common/Button.svelte';
   import Icon from '../common/Icon.svelte';
-  import { paymentChannelText } from 'src/utils/paymentChannel';
+  import CartItem, { type ICartItem } from './CartItem.svelte';
 
   const dispatch = createEventDispatcher<ICartEvent>();
 

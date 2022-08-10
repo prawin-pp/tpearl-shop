@@ -21,13 +21,13 @@
 
 <script lang="ts">
   import numeral from 'numeral';
-  import { createEventDispatcher } from 'svelte';
-  import type { TPaymentChannel } from 'src/models/price.model';
-  import Icon from '../common/Icon.svelte';
-  import { currencyText } from 'src/utils/currency';
   import config from 'src/config';
-  import ImageSkeleton from '../common/ImageSkeleton.svelte';
+  import type { TPaymentChannel } from 'src/models/price.model';
   import type { IProductAddon } from 'src/models/productAddon.model';
+  import { currencyText } from 'src/utils/currency';
+  import { createEventDispatcher } from 'svelte';
+  import Icon from '../common/Icon.svelte';
+  import ImageSkeleton from '../common/ImageSkeleton.svelte';
 
   const dispatch = createEventDispatcher<ICartItemEvent>();
 

@@ -2,7 +2,6 @@
   import router from 'page';
 
   import Button from 'src/lib/common/Button.svelte';
-  import Toast from 'src/lib/common/Toast.svelte';
   import api from 'src/services/api';
   import { store } from 'src/stores';
   import { ToastController } from 'src/utils/toast';

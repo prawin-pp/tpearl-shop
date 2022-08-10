@@ -5,6 +5,9 @@
   "files.eol": "\n",
   "files.insertFinalNewline": true,
   "files.trimTrailingWhitespace": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": true
+  },
   "svelte.enable-ts-plugin": true,
   "prettier.documentSelectors": ["**/*.svelte"],
   "[svelte]": {

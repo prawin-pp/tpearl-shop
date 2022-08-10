@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { ICategory } from 'src/models/category.model';
 
-  import type { IPaymentChannel, TPaymentChannel } from 'src/models/price.model';
+  import type { TPaymentChannel } from 'src/models/price.model';
 
   import type { IProduct } from 'src/models/product.model';
   import { createEventDispatcher } from 'svelte';

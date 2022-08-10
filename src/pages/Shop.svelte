@@ -1,26 +1,25 @@
 <script lang="ts">
   import type { IProduct } from 'src/models/product.model';
 
-  import { onMount } from 'svelte';
-  import api from 'src/services/api';
-  import ProductList from 'src/lib/shop/ProductList.svelte';
+  import ConfirmModal from 'src/lib/common/ConfirmModal.svelte';
   import Cart, { type ICart } from 'src/lib/shop/Cart.svelte';
   import type { ICartItem } from 'src/lib/shop/CartItem.svelte';
-  import ConfirmModal from 'src/lib/common/ConfirmModal.svelte';
   import FullScreenPaymentChannel from 'src/lib/shop/FullScreenPaymentChannel.svelte';
+  import ProductAddonModal, { type IProductAddonForm } from 'src/lib/shop/ProductAddonModal.svelte';
+  import ProductList from 'src/lib/shop/ProductList.svelte';
+  import type { ICategory } from 'src/models/category.model';
   import type { IPaymentChannel, TPaymentChannel } from 'src/models/price.model';
+  import type { IProductAddon } from 'src/models/productAddon.model';
+  import api from 'src/services/api';
   import type {
     ICreatePaymentItemRequest,
     ICreatePaymentRequest,
   } from 'src/services/api/models/payment.model';
   import { createPayment } from 'src/services/api/payment.api';
-  import numeral from 'numeral';
-  import { ToastController } from 'src/utils/toast';
   import { currencyText } from 'src/utils/currency';
   import { paymentChannelText } from 'src/utils/paymentChannel';
-  import type { ICategory } from 'src/models/category.model';
-  import type { IProductAddon } from 'src/models/productAddon.model';
-  import ProductAddonModal, { type IProductAddonForm } from 'src/lib/shop/ProductAddonModal.svelte';
+  import { ToastController } from 'src/utils/toast';
+  import { onMount } from 'svelte';
 
   let productAddonModal: ProductAddonModal;
   let confirmDeleteAllProductModal: ConfirmModal;

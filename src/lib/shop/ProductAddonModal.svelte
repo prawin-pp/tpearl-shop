@@ -26,7 +26,6 @@
   import ImageSkeleton from '../common/ImageSkeleton.svelte';
 
   import Modal from '../common/Modal.svelte';
-  import Product from './Product.svelte';
 
   const dispatch = createEventDispatcher<IProductAddonModalEvent>();
 
