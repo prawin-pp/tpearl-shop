@@ -4,7 +4,7 @@ ARG NODE_ENV=development
 ENV NODE_ENV=$NODE_ENV
 
 RUN set -e; apk add --no-cache bash git
-RUN npm install -g vite
+RUN npm install -g vite typescript
 
 WORKDIR /usr/src/app
 
