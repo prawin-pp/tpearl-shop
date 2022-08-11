@@ -1,0 +1,16 @@
+version: "3"
+services:
+  app:
+    build:
+      dockerfile: ./devtools/docker/Dockerfile
+      context: .
+      args:
+        - NODE_ENV=${NODE_ENV}
+    image: tpearl-shop:latest
+    ports:
+      - "8080:80"
+    environment:
+      VITE_API_BASE_URL: ${VITE_API_BASE_URL}
+      VITE_API_SKIP_AUTH: ${VITE_API_SKIP_AUTH}
+    restart: always
+
