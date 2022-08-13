@@ -18,7 +18,7 @@ RUN npm run build
 
 FROM nginx:latest as server
 
-WORKDIR /usr/src/app
+WORKDIR /usr/share/nginx/html
 
 COPY --from=build /usr/src/app/dist /usr/share/nginx/html
 COPY devtools/nginx/nginx.conf /etc/nginx/conf.d/default.conf

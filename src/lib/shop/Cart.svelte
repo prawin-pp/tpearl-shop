@@ -81,14 +81,17 @@
     <Button
       class="
       {cart.paymentChannel === 'CASH' ? 'bg-cash' : ''}
-      {cart.paymentChannel === 'PROMPTPAY' ? 'bg-promptpay' : ''}
       {cart.paymentChannel === 'GRAB' ? 'bg-grab' : ''}
       {cart.paymentChannel === 'LINEMAN' ? 'bg-lineman' : ''}
       {cart.paymentChannel === 'ROBINHOOD' ? 'bg-robinhood' : ''}
       text-white transition-all"
       on:click={() => dispatch('select-payment-channel')}
     >
-      {paymentChannelText[cart.paymentChannel]}
+      {#if cart.paymentChannel === 'CASH'}
+        หน้าร้าน
+      {:else}
+        {paymentChannelText[cart.paymentChannel]}
+      {/if}
     </Button>
     <Button
       class="{cart.items.length === 0

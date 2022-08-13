@@ -5,6 +5,7 @@
   import Cart, { type ICart } from 'src/lib/shop/Cart.svelte';
   import type { ICartItem } from 'src/lib/shop/CartItem.svelte';
   import FullScreenPaymentChannel from 'src/lib/shop/FullScreenPaymentChannel.svelte';
+  import FullScreenSelectCashOrPromptPay from 'src/lib/shop/FullScreenSelectCashOrPromptPay.svelte';
   import ProductAddonModal, { type IProductAddonForm } from 'src/lib/shop/ProductAddonModal.svelte';
   import ProductList from 'src/lib/shop/ProductList.svelte';
   import type { ICategory } from 'src/models/category.model';
@@ -25,6 +26,7 @@
   let confirmDeleteAllProductModal: ConfirmModal;
   let confirmPaymentModal: ConfirmModal;
   let fullScreenPaymentChannel: FullScreenPaymentChannel;
+  let fullScreenSelectCashOrPromptPay: FullScreenSelectCashOrPromptPay;
 
   let products: IProduct[] = [];
   let productAddons: IProductAddon[] = [];
@@ -107,6 +109,18 @@
     fullScreenPaymentChannel.hide();
   }
 
+  function handleUpdatePaymentChannelAndCreatePayment(e: CustomEvent<'CASH' | 'PROMPTPAY'>) {
+    cart.paymentChannel = e.detail;
+    return handleCreatePayment();
+  }
+
+  function handleConfirmSubmitPayment() {
+    if (cart.paymentChannel === 'CASH') {
+      return fullScreenSelectCashOrPromptPay.show();
+    }
+    return handleCreatePayment();
+  }
+
   async function handleCreatePayment() {
     const items = cart.items.map<ICreatePaymentItemRequest>((item) => ({
       product: {
@@ -157,6 +171,7 @@
 
     cart = { ...cart, items: [], paymentChannel: 'CASH' };
     confirmPaymentModal.hide();
+    fullScreenSelectCashOrPromptPay.hide();
   }
 
   function handleScrollToElement(selector) {
@@ -229,12 +244,17 @@
 <ConfirmModal
   title="ยืนยันการชำระเงิน?"
   bind:this={confirmPaymentModal}
-  onConfirm={handleCreatePayment}
+  onConfirm={handleConfirmSubmitPayment}
 />
 
 <FullScreenPaymentChannel
   bind:this={fullScreenPaymentChannel}
   on:select-payment-channel={handleUpdatePaymentChannel}
+/>
+
+<FullScreenSelectCashOrPromptPay
+  bind:this={fullScreenSelectCashOrPromptPay}
+  on:select-payment-channel={handleUpdatePaymentChannelAndCreatePayment}
 />
 
 <ProductAddonModal

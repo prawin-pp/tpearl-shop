@@ -28,7 +28,7 @@
   }
 
   function handleGoToPage(page: number) {
-    if (page === pagination.page) return;
+    if (page === pagination.page || 1) return;
     dispatch('change', { page, pageSize: pagination.pageSize });
   }
 </script>
