@@ -28,7 +28,7 @@
   <div class="mt-auto flex">
     {#if price}
       <span
-        class:text-black={price.price > 0 && price.paymentChannel.name === 'CASH'}
+        class:text-cash={price.price > 0 && price.paymentChannel.name === 'CASH'}
         class:text-grab={price.price > 0 && price.paymentChannel.name === 'GRAB'}
         class:text-lineman={price.price > 0 && price.paymentChannel.name === 'LINEMAN'}
         class:text-robinhood={price.price > 0 && price.paymentChannel.name === 'ROBINHOOD'}
