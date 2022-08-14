@@ -1,7 +1,6 @@
 FROM node:lts-alpine as build
 
 ARG NODE_ENV=development
-ENV NODE_ENV=$NODE_ENV
 
 RUN set -e; apk add --no-cache bash git
 RUN npm install -g vite typescript
@@ -11,6 +10,8 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 RUN npm install
+
+ENV NODE_ENV=$NODE_ENV
 
 COPY . .
 

@@ -1,12 +1,7 @@
 version: "3"
 services:
   web:
-    build:
-      dockerfile: ./devtools/docker/Dockerfile
-      context: .
-      args:
-        - NODE_ENV=${NODE_ENV}
-    image: tpearl-shop:latest
+    image: registry.gitlab.com/tpearl/tpearl-shop:latest
     ports:
       - "8080:80"
     environment:
