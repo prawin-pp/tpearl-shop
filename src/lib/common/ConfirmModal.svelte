@@ -1,11 +1,12 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { onDestroy, onMount } from 'svelte';
   import Icon from './Icon.svelte';
   import Symbol from './Symbol.svelte';
 
   export let title: string;
   export let okText = 'ตกลง';
   export let cancelText = 'ยกเลิก';
+  export let maskClosable = true;
   export let onConfirm: () => void = undefined;
   export let onCancel: () => void = undefined;
 
@@ -34,17 +35,31 @@
     onCancel();
   }
 
+  function handleClickMaskCloseModal() {
+    popupElement.addEventListener('click', onClickMaskCloseModal);
+  }
+
+  function onClickMaskCloseModal(e: Event) {
+    const target = e.target;
+    if (target === popupElement) hide();
+  }
+
   onMount(() => {
     modal = new Modal(popupElement);
+    maskClosable && handleClickMaskCloseModal();
+  });
+
+  onDestroy(() => {
+    popupElement.removeEventListener('click', onClickMaskCloseModal);
   });
 </script>
 
 <div
+  bind:this={popupElement}
   id="popup-modal"
   tabindex="-1"
   aria-hidden="true"
   class="fixed top-0 right-0 left-0 z-50 hidden h-modal overflow-y-auto overflow-x-hidden md:inset-0 md:h-full"
-  bind:this={popupElement}
 >
   <div class="relative h-full w-full max-w-md p-4 md:h-auto">
     <div class="relative rounded-lg bg-white shadow">

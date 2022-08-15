@@ -99,7 +99,7 @@
                 {dayjs(payment.createdAt).format('DD/MM/YYYY')}
               </td>
               <td class="whitespace-nowrap py-4 px-6 text-gray-900">
-                {dayjs(payment.createdAt).format('HH:mm')}
+                {dayjs(payment.createdAt).format('HH:mm:ss')}
               </td>
               <td class="py-4 px-6">
                 {#each payment.items as item}

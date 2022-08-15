@@ -3,6 +3,7 @@
 
   export interface IFullScreenSelectCashOrPromptPay {
     'select-payment-channel': 'CASH' | 'PROMPTPAY';
+    cancel: void;
   }
 </script>
 
@@ -20,6 +21,7 @@
 
   export function hide() {
     visible = false;
+    dispatch('cancel');
   }
 </script>
 

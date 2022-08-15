@@ -32,6 +32,7 @@ export const searchPayments = async (
         'payment_channel',
       ],
       pagination: pagination || {},
+      sort: ['createdAt:desc'],
     },
     { encodeValuesOnly: true }
   );

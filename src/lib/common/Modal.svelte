@@ -1,11 +1,13 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { onDestroy, onMount } from 'svelte';
+
   import Icon from './Icon.svelte';
 
   let modalElement: HTMLElement;
   let modal: Modal;
 
   export let title: string;
+  export let maskClosable = true;
 
   export function show() {
     modal?.show();
@@ -18,13 +20,27 @@
   export function toggle() {
     modal?.toggle();
   }
+
   function handleClickCancel() {
     modal?.hide();
   }
 
+  function handleClickMaskCloseModal() {
+    modalElement.addEventListener('click', onClickMaskCloseModal);
+  }
+
+  function onClickMaskCloseModal(e: Event) {
+    const target = e.target;
+    if (target === modalElement) hide();
+  }
+
   onMount(() => {
     modal = new Modal(modalElement);
-    modal.hide();
+    maskClosable && handleClickMaskCloseModal();
+  });
+
+  onDestroy(() => {
+    modalElement.removeEventListener('click', onClickMaskCloseModal);
   });
 </script>
 
@@ -33,9 +49,9 @@
   id="modal"
   tabindex="-1"
   aria-hidden="true"
-  class="fixed top-0 right-0 left-0 z-50 hidden h-modal w-full overflow-y-auto overflow-x-hidden md:inset-0 md:h-full"
+  class="fixed top-0 right-0 left-0 z-50 hidden h-modal w-full flex-col overflow-y-auto overflow-x-hidden before:flex-1 before:content-[''] after:flex-1 after:content-[''] md:inset-0 md:h-full"
 >
-  <div class="relative h-full w-full max-w-2xl p-4 md:h-auto">
+  <div class="relative h-full w-full max-w-2xl flex-1 p-4 md:h-auto">
     <!-- Modal content -->
     <div class="relative rounded-lg bg-white shadow">
       <!-- Modal header -->
@@ -63,3 +79,9 @@
     </div>
   </div>
 </div>
+
+<style>
+  #modal {
+    justify-content: unset;
+  }
+</style>

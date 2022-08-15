@@ -255,6 +255,7 @@
 <FullScreenSelectCashOrPromptPay
   bind:this={fullScreenSelectCashOrPromptPay}
   on:select-payment-channel={handleUpdatePaymentChannelAndCreatePayment}
+  on:cancel={() => confirmPaymentModal.hide()}
 />
 
 <ProductAddonModal
