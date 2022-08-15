@@ -1,14 +1,11 @@
+import type { Context } from 'page';
 import type { ComponentType } from 'svelte';
-import Login from './pages/Login.svelte';
-import Shop from './pages/Shop.svelte';
-import Transaction from './pages/Payment.svelte';
-import Payment from './pages/Payment.svelte';
-import Report from './pages/Report.svelte';
 
 interface Route {
   name: string;
   path: string;
   component?: ComponentType;
+  asyncComponent?: (ctx: Context) => Promise<any>;
   auth?: boolean;
   redirect?: string;
 }
@@ -17,25 +14,33 @@ const routes: Route[] = [
   {
     name: 'login',
     path: '/login',
-    component: Login,
+    asyncComponent: (ctx: Context) => {
+      return import('./pages/Login.svelte');
+    },
   },
   {
     name: 'shop',
     path: '/shop',
-    component: Shop,
     auth: true,
+    asyncComponent: (ctx: Context) => {
+      return import('./pages/Shop.svelte');
+    },
   },
   {
     name: 'payment',
     path: '/payment',
-    component: Payment,
     auth: true,
+    asyncComponent: (ctx: Context) => {
+      return import('./pages/Payment.svelte');
+    },
   },
   {
     name: 'report',
     path: '/report',
-    component: Report,
     auth: true,
+    asyncComponent: (ctx: Context) => {
+      return import('./pages/Report.svelte');
+    },
   },
   {
     name: '*',

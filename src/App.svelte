@@ -18,7 +18,7 @@
 
   function setupRouter() {
     routes.forEach((route) => {
-      router(route.path, (ctx, next) => {
+      router(route.path, async (ctx, next) => {
         if (route.redirect) {
           return router.redirect(route.redirect);
         }
@@ -27,7 +27,13 @@
         } else if (!route.auth && $user) {
           return router.redirect('/');
         }
-        page = route.component;
+
+        if (route.asyncComponent) {
+          const { default: component } = await route.asyncComponent(ctx);
+          page = component;
+        } else if (route.component) {
+          page = route.component;
+        }
         params = ctx.params;
         location = ctx;
       });
