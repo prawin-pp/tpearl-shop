@@ -5,6 +5,7 @@
     type IDateRangePickerEvent,
   } from 'src/lib/common/DateRangePicker.svelte';
   import ReportSalesByProduct from 'src/lib/report/ReportSalesByProduct.svelte';
+  import ReportSalesByTime from 'src/lib/report/ReportSalesByTime.svelte';
   import type { IPayment } from 'src/models/payment.model';
   import type { TPaymentChannel } from 'src/models/price.model';
   import api from 'src/services/api';
@@ -152,6 +153,14 @@
     <div class="flex flex-col gap-y-5 rounded-xl bg-white p-5">
       <span class="block whitespace-nowrap text-xl text-gray-500">สินค้าขายดี</span>
       <ReportSalesByProduct payments={payments} />
+    </div>
+    <div class="flex flex-col gap-y-5 rounded-xl bg-white p-5">
+      <span class="block whitespace-nowrap text-xl text-gray-500">ยอดขายตามช่วงเวลา</span>
+      <ReportSalesByTime
+        payments={payments}
+        startAt={searchCriteria.startAt}
+        endAt={searchCriteria.endAt}
+      />
     </div>
   </section>
 </div>
