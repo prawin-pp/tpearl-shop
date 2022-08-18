@@ -1,6 +1,6 @@
 <script lang="ts" context="module">
   export interface ISalesByTime {
-    time: number;
+    time: string;
     quantity: number;
   }
 </script>
@@ -11,30 +11,24 @@
   import type { IPayment } from 'src/models/payment.model';
   import { onMount } from 'svelte';
 
-  export let startAt: string;
-  export let endAt: string;
   export let payments: IPayment[] = [];
 
   let data: ISalesByTime[] = [];
 
   $: {
-    let start = dayjs(startAt, 'DD/MM/YYYY').startOf('day').valueOf();
-    const end = dayjs(endAt, 'DD/MM/YYYY').endOf('day').valueOf();
-    const diff = dayjs(end).diff(start, 'hour').valueOf();
-
     data = [];
-    for (let i = 0; i <= diff; i++) {
+    for (let i = 6; i <= 21; i++) {
       const quantity = payments
         .filter((payment) => {
-          const createdAt = payment.createdAt.getTime();
-          return createdAt >= start && createdAt < start + 3600000;
+          const hour = dayjs(payment.createdAt).hour();
+          return hour >= i && hour < i + 1;
         })
         .reduce((value, payment) => {
           const count = payment.items.reduce((v, item) => v + item.quantity, 0);
           return value + count;
         }, 0);
-      data.push({ time: start, quantity: quantity });
-      start += 3600000;
+      const time = `${i.toString().padStart(2, '0')}:00`;
+      data.push({ time: time, quantity: quantity });
     }
     renderChart();
   }
@@ -66,20 +60,10 @@
       colors: ['transparent'],
     },
     xaxis: {
-      min: dayjs(startAt, 'DD/MM/YYYY').startOf('day').valueOf(),
-      max: dayjs(endAt, 'DD/MM/YYYY').endOf('day').valueOf(),
-      tickAmount:
-        dayjs(endAt, 'DD/MM/YYYY')
-          .endOf('day')
-          .diff(dayjs(startAt, 'DD/MM/YYYY').startOf('day'), 'hour') / 5,
       labels: {
         style: {
           fontFamily: `'Sarabun', sans-serif`,
           fontSize: '16px',
-        },
-        datetimeUTC: false,
-        formatter: (value) => {
-          return dayjs(value).format('HH:mm');
         },
       },
     },
@@ -104,11 +88,6 @@
       style: {
         fontFamily: `'Sarabun', sans-serif`,
         fontSize: '16px',
-      },
-      x: {
-        formatter: function (value) {
-          return dayjs(value).format('DD/MM/YYYY HH:mm');
-        },
       },
       y: {
         formatter: function (value) {

@@ -156,11 +156,7 @@
     </div>
     <div class="flex flex-col gap-y-5 rounded-xl bg-white p-5">
       <span class="block whitespace-nowrap text-xl text-gray-500">ยอดขายตามช่วงเวลา</span>
-      <ReportSalesByTime
-        payments={payments}
-        startAt={searchCriteria.startAt}
-        endAt={searchCriteria.endAt}
-      />
+      <ReportSalesByTime payments={payments} />
     </div>
   </section>
 </div>
