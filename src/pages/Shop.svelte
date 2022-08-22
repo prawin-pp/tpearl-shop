@@ -1,12 +1,12 @@
 <script lang="ts">
   import ConfirmModal from 'src/lib/common/ConfirmModal.svelte';
   import Cart from 'src/lib/shop/Cart.svelte';
-  import type { ICartItem } from 'src/lib/shop/CartItem.svelte';
+  import CustomPriceModal from 'src/lib/shop/CustomPriceModal.svelte';
   import FullScreenPaymentChannel from 'src/lib/shop/FullScreenPaymentChannel.svelte';
   import FullScreenSelectCashOrPromptPay from 'src/lib/shop/FullScreenSelectCashOrPromptPay.svelte';
   import ProductAddonModal, { type IProductAddonForm } from 'src/lib/shop/ProductAddonModal.svelte';
   import ProductList from 'src/lib/shop/ProductList.svelte';
-  import { CartModel } from 'src/models/cart.model';
+  import { CartModel, type ICartItem } from 'src/models/cart.model';
   import type { ICategory } from 'src/models/category.model';
   import type { IPaymentChannel, TPaymentChannel } from 'src/models/price.model';
   import type { IProduct } from 'src/models/product.model';
@@ -18,6 +18,7 @@
   import { onMount } from 'svelte';
 
   let productAddonModal: ProductAddonModal;
+  let customPriceModal: CustomPriceModal;
   let confirmDeleteAllProductModal: ConfirmModal;
   let confirmPaymentModal: ConfirmModal;
   let fullScreenPaymentChannel: FullScreenPaymentChannel;
@@ -75,6 +76,14 @@
     productAddonModal.hide();
   }
 
+  function handleAddCustomToCart(e: CustomEvent<number>) {
+    const custom = { ...selectedProduct };
+    custom.prices = custom.prices.map((price) => ({ ...price, price: e.detail }));
+
+    cart = cart.add(custom, [], 100);
+    customPriceModal.hide();
+  }
+
   function handleIncreaseProductQuantity(e: CustomEvent<ICartItem>) {
     cart = cart.increase(e.detail);
   }
@@ -124,7 +133,11 @@
 
   function handleOpenProductAddonModal(e: CustomEvent<IProduct>) {
     selectedProduct = e.detail;
-    productAddonModal.show();
+    if (selectedProduct.category.name === 'อื่นๆ') {
+      customPriceModal.show();
+    } else {
+      productAddonModal.show();
+    }
   }
 
   onMount(() => {
@@ -196,3 +209,5 @@
   paymentChannel={cart.paymentChannel}
   on:submit={handleAddProductToCart}
 />
+
+<CustomPriceModal bind:this={customPriceModal} on:submit={handleAddCustomToCart} />

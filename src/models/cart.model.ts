@@ -30,6 +30,7 @@ export class CartModel {
   }
 
   add(product: IProduct, addons: IProductAddonItem[], sweetness: number) {
+    const isCustom = product.category.name === 'อื่นๆ';
     const index = this.items.findIndex((cartItem) => {
       const isSameProduct = cartItem.product.id === product.id;
       const isSameSweetness = cartItem.sweetness === sweetness;
@@ -44,7 +45,7 @@ export class CartModel {
       return isSameProduct && isSameSweetness && isSameLength && isSameAddonAndQuantity;
     });
     1;
-    if (index >= 0) {
+    if (!isCustom && index >= 0) {
       this.items[index].quantity++;
       return this.clone();
     }
