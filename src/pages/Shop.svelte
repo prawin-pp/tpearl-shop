@@ -1,22 +1,17 @@
 <script lang="ts">
-  import type { IProduct } from 'src/models/product.model';
-
   import ConfirmModal from 'src/lib/common/ConfirmModal.svelte';
-  import Cart, { type ICart } from 'src/lib/shop/Cart.svelte';
+  import Cart from 'src/lib/shop/Cart.svelte';
   import type { ICartItem } from 'src/lib/shop/CartItem.svelte';
   import FullScreenPaymentChannel from 'src/lib/shop/FullScreenPaymentChannel.svelte';
   import FullScreenSelectCashOrPromptPay from 'src/lib/shop/FullScreenSelectCashOrPromptPay.svelte';
   import ProductAddonModal, { type IProductAddonForm } from 'src/lib/shop/ProductAddonModal.svelte';
   import ProductList from 'src/lib/shop/ProductList.svelte';
+  import { CartModel } from 'src/models/cart.model';
   import type { ICategory } from 'src/models/category.model';
   import type { IPaymentChannel, TPaymentChannel } from 'src/models/price.model';
+  import type { IProduct } from 'src/models/product.model';
   import type { IProductAddon } from 'src/models/productAddon.model';
   import api from 'src/services/api';
-  import type {
-    ICreatePaymentItemRequest,
-    ICreatePaymentRequest,
-  } from 'src/services/api/models/payment.model';
-  import { createPayment } from 'src/services/api/payment.api';
   import { currencyText } from 'src/utils/currency';
   import { paymentChannelText } from 'src/utils/paymentChannel';
   import { ToastController } from 'src/utils/toast';
@@ -32,7 +27,7 @@
   let productAddons: IProductAddon[] = [];
   let categories: ICategory[] = [];
   let paymentChannels: IPaymentChannel[] = [];
-  let cart: ICart = { items: [], paymentChannel: 'CASH' };
+  let cart = new CartModel();
 
   let selectedProduct: IProduct;
 
@@ -52,65 +47,54 @@
     api.paymentChannel.getPaymentChannels().then((items) => (paymentChannels = items));
   }
 
+  async function handleCreatePayment() {
+    const req = cart.toCreatePaymentRequest(paymentChannels);
+
+    await api.payment.createPayment(req);
+
+    ToastController.success(
+      `ชำระเงินผ่านช่องทาง ${paymentChannelText[cart.paymentChannel]} เรียบร้อย`,
+      `ทั้งหมด ${cart.items.length} รายการ ราคา ${currencyText(cart.totalAmount)} บาท`,
+      10000
+    );
+
+    refresh();
+  }
+
+  function refresh() {
+    cart = cart.reset();
+    productAddonModal.hide();
+    confirmDeleteAllProductModal.hide();
+    confirmPaymentModal.hide();
+    fullScreenPaymentChannel.hide();
+    fullScreenSelectCashOrPromptPay.hide();
+  }
+
   function handleAddProductToCart(e: CustomEvent<IProductAddonForm>) {
-    const selectedProductAddon = e.detail;
-    const index = cart.items.findIndex((cartItem) => {
-      const isSameLength = cartItem.addons.length === selectedProductAddon.items.length;
-      const isSameSweetness = cartItem.sweetness === selectedProductAddon.sweetness;
-      const isSameAddonAndQuantity = cartItem.addons.every((addon) => {
-        return selectedProductAddon.items.find((item) => {
-          return item.product.id === addon.product.id && item.quantity === addon.quantity;
-        });
-      });
-      return (
-        cartItem.product.id === selectedProduct.id &&
-        isSameLength &&
-        isSameSweetness &&
-        isSameAddonAndQuantity
-      );
-    });
-    if (index >= 0) {
-      cart.items[index].quantity++;
-    } else {
-      cart.items.push({
-        product: selectedProduct,
-        quantity: 1,
-        addons: selectedProductAddon.items,
-        sweetness: selectedProductAddon.sweetness,
-      });
-    }
-    cart = { ...cart };
+    cart = cart.add(selectedProduct, e.detail.items, e.detail.sweetness);
     productAddonModal.hide();
   }
 
   function handleIncreaseProductQuantity(e: CustomEvent<ICartItem>) {
-    const index = cart.items.findIndex((item) => item.product.id === e.detail.product.id);
-    cart.items[index].quantity++;
-    cart = { ...cart };
+    cart = cart.increase(e.detail);
   }
 
   function handleDecreaseProductQuantity(e: CustomEvent<ICartItem>) {
-    const index = cart.items.findIndex((item) => item.product.id === e.detail.product.id);
-    if (cart.items[index].quantity === 1) {
-      cart.items.splice(index, 1);
-    } else {
-      cart.items[index].quantity--;
-    }
-    cart = { ...cart };
+    cart = cart.decrease(e.detail);
   }
 
   function handleRemoveAllProduct() {
-    cart = { ...cart, items: [] };
+    cart = cart.clear();
     confirmDeleteAllProductModal.hide();
   }
 
   function handleUpdatePaymentChannel(e: CustomEvent<TPaymentChannel>) {
-    cart = { ...cart, paymentChannel: e.detail };
+    cart = cart.setPaymentChannel(e.detail);
     fullScreenPaymentChannel.hide();
   }
 
   function handleUpdatePaymentChannelAndCreatePayment(e: CustomEvent<'CASH' | 'PROMPTPAY'>) {
-    cart.paymentChannel = e.detail;
+    cart = cart.setPaymentChannel(e.detail);
     return handleCreatePayment();
   }
 
@@ -119,59 +103,6 @@
       return fullScreenSelectCashOrPromptPay.show();
     }
     return handleCreatePayment();
-  }
-
-  async function handleCreatePayment() {
-    const items = cart.items.map<ICreatePaymentItemRequest>((item) => ({
-      product: {
-        id: item.product.id,
-      },
-      price: item.product.prices.find((price) => price.paymentChannel.name === cart.paymentChannel)
-        .price,
-      quantity: item.quantity,
-      addons: item.addons.map((addon) => ({
-        product: {
-          id: addon.product.id,
-        },
-        quantity: addon.quantity,
-        price: addon.product.prices.find(
-          (price) => price.paymentChannel.name === cart.paymentChannel
-        ).price,
-      })),
-      sweetness: item.sweetness,
-    }));
-    const totalAmount = cart.items.reduce((prev, item) => {
-      const addonAmount = item.addons.reduce((value, addon) => {
-        const { price } = addon.product.prices.find(
-          (price) => price.paymentChannel.name === cart.paymentChannel
-        );
-        return value + price * addon.quantity;
-      }, 0);
-      const { price } = item.product.prices.find(
-        (price) => price.paymentChannel.name === cart.paymentChannel
-      );
-      const amount = (price + addonAmount) * item.quantity;
-      return prev + amount;
-    }, 0);
-    const req: ICreatePaymentRequest = {
-      items: items,
-      payment_channel: {
-        id: paymentChannels.find((pc) => pc.name === cart.paymentChannel).id,
-      },
-      total_amount: totalAmount,
-    };
-
-    await createPayment(req);
-
-    ToastController.success(
-      `ชำระเงินผ่านช่องทาง ${paymentChannelText[cart.paymentChannel]} เรียบร้อย`,
-      `ทั้งหมด ${cart.items.length} รายการ ราคา ${currencyText(totalAmount)} บาท`,
-      10000
-    );
-
-    cart = { ...cart, items: [], paymentChannel: 'CASH' };
-    confirmPaymentModal.hide();
-    fullScreenSelectCashOrPromptPay.hide();
   }
 
   function handleScrollToElement(selector) {

@@ -1,8 +1,8 @@
 <script lang="ts">
-  let classes = '';
-  export { classes as class };
+  let className = '';
+  export { className as class };
 </script>
 
-<span class="material-symbols-rounded block select-none {classes || ''}" on:click>
+<span class="material-symbols-rounded block select-none {className || ''}" on:click>
   <slot />
 </span>

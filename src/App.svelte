@@ -22,6 +22,7 @@
         if (route.redirect) {
           return router.redirect(route.redirect);
         }
+
         if (route.auth && !$user) {
           return router.redirect('/login');
         } else if (!route.auth && $user) {
@@ -34,6 +35,7 @@
         } else if (route.component) {
           page = route.component;
         }
+
         params = ctx.params;
         location = ctx;
       });
@@ -59,10 +61,8 @@
 
   function handleLogout() {
     confirmLogoutModal.hide();
-    localStorage.removeItem('tpearl:auth:token');
     page = null;
-    user.set(null);
-    router.redirect('/');
+    user.logout();
   }
 
   onMount(async () => {

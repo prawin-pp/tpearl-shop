@@ -1,3 +1,12 @@
 import { writable } from 'svelte/store';
 
-export const loading = writable(0);
+function createLoading() {
+  const { set, subscribe, update } = writable(0);
+  return {
+    clear: () => set(0),
+    decrease: () => update((value) => value - 1),
+    increase: () => update((value) => value + 1),
+    subscribe,
+  };
+}
+export const loading = createLoading();

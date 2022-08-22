@@ -1,18 +1,4 @@
 <script lang="ts" context="module">
-  import type { IProduct } from 'src/models/product.model';
-
-  export interface ICartItem {
-    product: IProduct;
-    quantity: number;
-    addons: ICartAddonItem[];
-    sweetness: number;
-  }
-
-  export interface ICartAddonItem {
-    product: IProductAddon;
-    quantity: number;
-  }
-
   export interface ICartItemEvent {
     'increase-quantity': ICartItem;
     'decrease-quantity': ICartItem;
@@ -22,8 +8,8 @@
 <script lang="ts">
   import numeral from 'numeral';
   import config from 'src/config';
+  import type { ICartItem } from 'src/models/cart.model';
   import type { TPaymentChannel } from 'src/models/price.model';
-  import type { IProductAddon } from 'src/models/productAddon.model';
   import { currencyText } from 'src/utils/currency';
   import { createEventDispatcher } from 'svelte';
   import Icon from '../common/Icon.svelte';
@@ -31,31 +17,29 @@
 
   const dispatch = createEventDispatcher<ICartItemEvent>();
 
-  export let item: ICartItem;
-  export let paymentChannel: TPaymentChannel = 'CASH';
-  export { classes as class };
-
-  let classes = '';
+  let className = '';
   let totalAmount = 0;
+
+  export let item: ICartItem;
+  export let paymentChannel: TPaymentChannel;
+  export { className as class };
+
   $: {
-    const priceByPaymentChannel = item.product.prices.find(
+    const { price } = item.product.prices.find(
       (price) => price.paymentChannel.name === paymentChannel
     );
-    const productAddonPrice = item.addons.reduce((value, addon) => {
+    const addonsAmount = item.addons.reduce((value, addon) => {
       const price = addon.product.prices.find(
         (price) => price.paymentChannel.name === paymentChannel
       );
       return value + price.price * addon.quantity;
     }, 0);
 
-    totalAmount = numeral(priceByPaymentChannel?.price || 0)
-      .add(productAddonPrice)
-      .multiply(item.quantity)
-      .value();
+    totalAmount = numeral(price).add(addonsAmount).multiply(item.quantity).value();
   }
 </script>
 
-<div class="grid grid-cols-[96px_1fr] gap-x-4 p-4 {classes || ''}">
+<div class="grid grid-cols-[96px_1fr] gap-x-4 p-4 {className || ''}">
   <div class="h-24 w-24 overflow-hidden rounded-xl bg-white">
     {#if item.product.image}
       <img

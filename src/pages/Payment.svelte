@@ -1,20 +1,20 @@
 <script lang="ts">
   import dayjs from 'dayjs';
+  import { onMount } from 'svelte';
+
+  import ConfirmModal from 'src/lib/common/ConfirmModal.svelte';
   import DateRangePicker, {
     type IDateRangePickerEvent,
   } from 'src/lib/common/DateRangePicker.svelte';
+  import Pagination from 'src/lib/common/Pagination.svelte';
   import type { IPagination } from 'src/models/pagination.model';
   import type { IPayment } from 'src/models/payment.model';
   import api from 'src/services/api';
-
-  import ConfirmModal from 'src/lib/common/ConfirmModal.svelte';
-  import Pagination from 'src/lib/common/Pagination.svelte';
   import type { ISearchPaymentCriteria } from 'src/services/api/models/payment.model';
   import type { IPaginationRequest } from 'src/services/api/models/request.model';
   import { priceText } from 'src/utils/currency';
   import { paymentChannelText } from 'src/utils/paymentChannel';
   import { ToastController } from 'src/utils/toast';
-  import { onMount } from 'svelte';
 
   let confirmDeletePaymentModal: ConfirmModal;
   let selectedPayment: IPayment;

@@ -1,9 +1,4 @@
 <script lang="ts" context="module">
-  export interface ICart {
-    items: ICartItem[];
-    paymentChannel?: TPaymentChannel;
-  }
-
   export interface ICartEvent {
     'select-payment-channel': void;
     'clear-all': void;
@@ -12,38 +7,18 @@
 </script>
 
 <script lang="ts">
-  import numeral from 'numeral';
-
-  import type { TPaymentChannel } from 'src/models/price.model';
   import { currencyText } from 'src/utils/currency';
   import { createEventDispatcher } from 'svelte';
 
+  import type { CartModel } from 'src/models/cart.model';
   import { paymentChannelText } from 'src/utils/paymentChannel';
   import Button from '../common/Button.svelte';
   import Icon from '../common/Icon.svelte';
-  import CartItem, { type ICartItem } from './CartItem.svelte';
+  import CartItem from './CartItem.svelte';
 
   const dispatch = createEventDispatcher<ICartEvent>();
 
-  export let cart: ICart = {
-    items: [],
-    paymentChannel: 'CASH',
-  };
-
-  $: totalAmount = cart.items.reduce((prev, item) => {
-    const priceByChannel = item.product.prices.find(
-      (price) => price.paymentChannel.name === cart.paymentChannel
-    );
-    const productAddonPrice = item.addons.reduce((value, addon) => {
-      const price = addon.product.prices.find(
-        (price) => price.paymentChannel.name === cart.paymentChannel
-      );
-      return value + price.price * addon.quantity;
-    }, 0);
-    return (
-      prev + numeral(priceByChannel.price).add(productAddonPrice).multiply(item.quantity).value()
-    );
-  }, 0);
+  export let cart: CartModel;
 </script>
 
 <div id="cart" class="flex h-full flex-col gap-y-5">
@@ -74,7 +49,7 @@
     <div class="h-0 border-t-2 border-dashed border-gray-200" />
     <div class="flex justify-between text-xl font-bold">
       <span>ยอดรวม</span>
-      <span>{currencyText(totalAmount)}</span>
+      <span>{currencyText(cart.totalAmount)}</span>
     </div>
   </section>
   <section class="flex flex-col gap-y-4 px-4 pb-4">
@@ -100,7 +75,7 @@
       disabled={cart.items.length === 0}
       on:click={() => dispatch('paid')}
     >
-      ชำระเงิน {currencyText(totalAmount)}
+      ชำระเงิน {currencyText(cart.totalAmount)}
     </Button>
   </section>
 </div>

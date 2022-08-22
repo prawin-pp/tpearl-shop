@@ -5,11 +5,11 @@
   import { currencyText } from 'src/utils/currency';
   import ImageSkeleton from '../common/ImageSkeleton.svelte';
 
-  export { classes as class };
+  let className: string;
+
+  export { className as class };
   export let product: IProduct;
   export let paymentChannel: TPaymentChannel;
-
-  let classes: string;
 
   $: price = product.prices?.find((price) => price.paymentChannel.name === paymentChannel);
 </script>
@@ -17,7 +17,7 @@
 <div
   id={`product-${product.id}`}
   class={`flex w-[250px] select-none flex-col gap-y-2 overflow-hidden rounded-xl bg-white p-3  ${
-    classes || ''
+    className || ''
   }`}
   class:bg-gray-200={price.price === 0}
   on:click

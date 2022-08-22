@@ -1,11 +1,11 @@
 <script lang="ts">
-  let classes = '';
-  export { classes as class };
+  let className = '';
+  export { className as class };
 </script>
 
 <div
   role="status"
-  class="space-y-8 md:flex md:items-center md:space-y-0 md:space-x-8 {classes || ''}"
+  class="space-y-8 md:flex md:items-center md:space-y-0 md:space-x-8 {className || ''}"
 >
   <div
     class="flex h-48 w-full items-center justify-center rounded bg-gray-200 dark:bg-gray-700 sm:w-96"
