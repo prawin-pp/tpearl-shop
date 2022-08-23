@@ -28,7 +28,7 @@
   }
 
   function handleGoToPage(page: number) {
-    if (page === pagination.page || 1) return;
+    if (page === pagination.page) return;
     dispatch('change', { page, pageSize: pagination.pageSize });
   }
 </script>
@@ -36,7 +36,9 @@
 <ul class="inline-flex items-center -space-x-px">
   <li>
     <div
-      class="flex h-10 w-10 items-center justify-center rounded-l-xl border border-gray-300 bg-white leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+      class="{pagination.page === 1
+        ? 'bg-gray-100'
+        : 'cursor-pointer bg-white'} flex h-10 w-10 items-center justify-center rounded-l-xl border border-gray-300 leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700"
       on:click={() => handleGoToPage(1)}
     >
       <span class="sr-only">First Page</span>
@@ -45,7 +47,9 @@
   </li>
   <li>
     <div
-      class="flex h-10 w-10 items-center justify-center border border-gray-300 bg-white leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+      class="{pagination.page === 1
+        ? 'bg-gray-100'
+        : 'cursor-pointer bg-white'} flex h-10 w-10 items-center justify-center border border-gray-300 leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700"
       on:click={handlePreviousPage}
     >
       <span class="sr-only">Previous</span>
@@ -54,7 +58,9 @@
   </li>
   <li>
     <div
-      class="flex h-10 w-10 items-center justify-center border border-gray-300 bg-white leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+      class="{pagination.page === (pagination.pageCount || 1)
+        ? 'bg-gray-100'
+        : 'cursor-pointer bg-white'} flex h-10 w-10 items-center justify-center border border-gray-300 leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700"
       on:click={handleNextPage}
     >
       <span class="sr-only">Next</span>
@@ -63,7 +69,9 @@
   </li>
   <li>
     <div
-      class="flex h-10 w-10 items-center justify-center rounded-r-xl border border-gray-300 bg-white leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+      class="{pagination.page === (pagination.pageCount || 1)
+        ? 'bg-gray-100'
+        : 'cursor-pointer bg-white'} flex h-10 w-10 items-center justify-center rounded-r-xl border border-gray-300 leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700"
       on:click={() => handleGoToPage(pagination.pageCount)}
     >
       <span class="sr-only">Last Page</span>
