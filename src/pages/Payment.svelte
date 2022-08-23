@@ -37,7 +37,7 @@
   }
 
   function handlePageChanges(e: CustomEvent<IPaginationRequest>) {
-    fetchPayments(searchCriteria, pagination);
+    fetchPayments(searchCriteria, e.detail);
   }
 
   function fetchPayments(criteria: ISearchPaymentCriteria, paginationRequest: IPaginationRequest) {
