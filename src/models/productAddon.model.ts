@@ -6,4 +6,5 @@ export interface IProductAddon {
   name: string;
   prices: IPrice[];
   image: IImage;
+  cost: number;
 }

@@ -37,7 +37,7 @@
   }
 
   function fetchProductAddons() {
-    api.productAddonApi.getProductAddons().then((items) => (productAddons = items));
+    api.productAddon.getProductAddons().then((items) => (productAddons = items));
   }
 
   function fetchCategories() {

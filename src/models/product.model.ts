@@ -8,4 +8,5 @@ export interface IProduct {
   category: ICategory;
   prices: IPrice[];
   image: IImage;
+  cost: number;
 }

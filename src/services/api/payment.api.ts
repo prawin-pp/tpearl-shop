@@ -55,6 +55,7 @@ export const searchPayments = async (
           },
           image: null,
           prices: null,
+          cost: item.product.data.attributes.cost || 0,
         },
         addons: item.addons.map((addon) => ({
           product: {
@@ -62,6 +63,7 @@ export const searchPayments = async (
             name: addon.product.data.attributes.name,
             prices: null,
             image: null,
+            cost: addon.product.data.attributes.cost,
           },
           quantity: addon.quantity,
           price: addon.price,

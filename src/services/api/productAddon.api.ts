@@ -26,10 +26,12 @@ export const getProductAddons = async (): Promise<IProductAddon[]> => {
         paymentChannel: {
           id: price.payment_channel.data.id,
           name: price.payment_channel.data.attributes.name,
+          grossProfit: price.payment_channel.data.attributes.gross_profit,
         },
         price: price.price,
       })),
       image: item.attributes.image?.data,
+      cost: item.attributes.cost || 0,
     };
   });
 };

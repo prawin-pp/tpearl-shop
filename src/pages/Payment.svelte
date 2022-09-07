@@ -68,7 +68,7 @@
   });
 </script>
 
-<div id="transaction" class="flex h-full w-full select-none flex-col gap-y-5 bg-gray-100 py-5">
+<div id="transaction" class="flex h-full w-full select-none flex-col gap-y-5 bg-gray-100 py-6">
   <section class="px-5">
     <span class="text-xl font-bold text-gray-700">รายการชำระเงิน</span>
   </section>

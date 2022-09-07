@@ -12,5 +12,6 @@ export interface IPaymentChannelResponse {
   id: number;
   attributes: {
     name: TPaymentChannel;
+    gross_profit: number;
   };
 }

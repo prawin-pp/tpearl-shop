@@ -1,8 +1,8 @@
+import qs from 'qs';
 import type { IProduct } from 'src/models/product.model';
 import client from './client.api';
-import type { IResponseList } from './models/response.model';
-import qs from 'qs';
 import type { IProductResponse } from './models/product.model';
+import type { IResponseList } from './models/response.model';
 
 export const getProducts = async (): Promise<IProduct[]> => {
   const query = qs.stringify(
@@ -32,6 +32,7 @@ export const getProducts = async (): Promise<IProduct[]> => {
         price: price.price,
       })),
       image: item.attributes.image?.data,
+      cost: item.attributes.cost || 0,
     };
   });
 };

@@ -1,7 +1,7 @@
 import type { IPaymentChannelResponse } from './price.model';
 import type { IProductResponse } from './product.model';
 import type { IProductAddonResponse } from './productAddon.model';
-import type { IResponseData, IResponseList } from './response.model';
+import type { IResponseData } from './response.model';
 
 export interface ICreatePaymentRequest {
   items: ICreatePaymentItemRequest[];

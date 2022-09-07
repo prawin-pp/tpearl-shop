@@ -39,6 +39,13 @@
     trending_up
   </Icon>
   <Icon
+    class="{location?.path === '/profit' ? 'bg-gray-200' : ''}
+    cursor-pointer rounded-xl p-2 text-[24px] transition hover:bg-gray-200"
+    on:click={() => handleChangePath('/profit')}
+  >
+    savings
+  </Icon>
+  <Icon
     class="mt-auto cursor-pointer rounded-xl p-2 text-[24px] text-rose-600 transition hover:bg-gray-200"
     on:click={handleLogout}
   >

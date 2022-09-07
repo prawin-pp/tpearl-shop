@@ -8,5 +8,6 @@ export interface IProductAddonResponse {
     name: string;
     image?: IResponseData<IImage>;
     prices?: IPriceResponse[];
+    cost: number;
   };
 }

@@ -10,5 +10,6 @@ export interface IProductResponse {
     image?: IResponseData<IImage>;
     category?: IResponseData<ICategoryResponse>;
     prices?: IPriceResponse[];
+    cost: number;
   };
 }

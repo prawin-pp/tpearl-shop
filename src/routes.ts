@@ -43,6 +43,14 @@ const routes: Route[] = [
     },
   },
   {
+    name: 'profit',
+    path: '/profit',
+    auth: true,
+    asyncComponent: (ctx: Context) => {
+      return import('./pages/Profit.svelte');
+    },
+  },
+  {
     name: '*',
     path: '*',
     redirect: '/shop',

@@ -7,6 +7,7 @@ export interface IPrice {
 export interface IPaymentChannel {
   id: number;
   name: TPaymentChannel;
+  grossProfit: number;
 }
 
 export type TPaymentChannel = 'CASH' | 'PROMPTPAY' | 'GRAB' | 'LINEMAN' | 'ROBINHOOD';

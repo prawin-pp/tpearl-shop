@@ -10,5 +10,6 @@ export const getPaymentChannels = async () => {
   return response.data.data.map<IPaymentChannel>((item) => ({
     id: item.id,
     name: item.attributes.name,
+    grossProfit: item.attributes.gross_profit,
   }));
 };
