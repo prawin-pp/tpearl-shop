@@ -128,7 +128,10 @@
       .sort((a, b) => b.profit - a.profit);
     const summaryData = {
       profit: profitDataList.reduce((value, { profit }) => numeral(value).add(profit).value(), 0),
-      cost: profitDataList.reduce((value, { cost }) => numeral(value).add(cost).value(), 0),
+      cost: profitDataList.reduce(
+        (value, { cost, quantity }) => numeral(cost).multiply(quantity).add(value).value(),
+        0
+      ),
       quantity: profitDataList.reduce(
         (value, { quantity }) => numeral(value).add(quantity).value(),
         0
