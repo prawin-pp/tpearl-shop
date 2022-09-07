@@ -298,6 +298,9 @@
                   class="whitespace-nowrap py-4 px-6 text-right group-last:rounded-br-xl"
                 >
                   {priceText(item.profit)}
+                  ({priceText(
+                    numeral(item.profit).multiply(100).divide(item.totalAmount).value()
+                  )}%)
                 </td>
               </tr>
             {/each}
@@ -342,6 +345,9 @@
                   class="whitespace-nowrap py-4 px-6 text-right group-last:rounded-br-xl"
                 >
                   {priceText(item.profit)}
+                  ({priceText(
+                    numeral(item.profit).multiply(100).divide(item.totalAmount).value()
+                  )}%)
                 </td>
               </tr>
             {/each}
