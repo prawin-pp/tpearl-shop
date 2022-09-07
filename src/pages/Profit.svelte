@@ -68,28 +68,31 @@
     fetchPayments(searchCriteria);
   }
 
-  function fetchProducts() {
-    api.product.getProducts().then((items) => (products = items.sort((a, b) => a.id - b.id)));
+  async function fetchProducts() {
+    const items = await api.product.getProducts();
+    products = items.sort((a, b) => a.id - b.id);
   }
 
-  function fetchProductAddons() {
-    api.productAddon
-      .getProductAddons()
-      .then((items) => (productAddons = items.sort((a, b) => a.id - b.id)));
+  async function fetchProductAddons() {
+    const items = await api.productAddon.getProductAddons();
+    productAddons = items.sort((a, b) => a.id - b.id);
   }
 
-  function fetchPaymentChannels() {
-    api.paymentChannel.getPaymentChannels().then((items) => {
-      items.forEach((item) => (grossProfits[item.name] = item.grossProfit));
+  async function fetchPaymentChannels() {
+    const items = await api.paymentChannel.getPaymentChannels();
+    items.forEach((item) => {
+      grossProfits[item.name] = item.grossProfit;
     });
   }
 
-  function fetchPayments(criteria: ISearchPaymentCriteria) {
+  async function fetchPayments(criteria: ISearchPaymentCriteria) {
     const startAt = dayjs(criteria.startAt, 'DD/MM/YYYY').format('YYYY-MM-DD');
     const endAt = dayjs(criteria.endAt, 'DD/MM/YYYY').add(1, 'day').format('YYYY-MM-DD');
-    api.payment
-      .searchPayments({ startAt, endAt }, { page: 1, pageSize: 9999 })
-      .then(({ items }) => assembleProfitData(items));
+    const { items } = await api.payment.searchPayments(
+      { startAt, endAt },
+      { page: 1, pageSize: 9999 }
+    );
+    assembleProfitData(items);
   }
 
   function assembleProfitData(payments: IPayment[]) {
