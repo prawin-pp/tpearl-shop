@@ -260,92 +260,94 @@
       </span>
     </div>
   </section>
-  <section class="flex flex-col overflow-hidden px-5">
-    <div class="relative overflow-auto">
-      <table class="w-full text-left">
-        <thead class="bg-gray-50 uppercase text-gray-700">
-          <th scope="col" class="w-0 rounded-tl-xl py-3 px-6" />
-          <th scope="col" class="whitespace-nowrap py-3 px-6">สินค้า</th>
-          <th scope="col" class="w-0 whitespace-nowrap py-3 px-6">ต้นทุน</th>
-          <th scope="col" class="w-0 whitespace-nowrap py-3 px-6">จำนวน</th>
-          <th scope="col" class="w-0 whitespace-nowrap py-3 px-6">ต้นทุนรวม</th>
-          <th scope="col" class="w-0 whitespace-nowrap py-3 px-6 text-right">
-            ยอดขายรวม (หลังหัก GP)
-          </th>
-          <th scope="col" class="w-0 whitespace-nowrap py-3 px-6 text-right">กำไร/ขาดทุน</th>
-        </thead>
-        <tbody>
-          {#each profitOfProducts as item, i}
-            <tr class="group border-b bg-white align-top last:border-b-0 hover:bg-gray-50">
-              <td class="w-0 py-4 px-6 text-gray-400 group-last:rounded-bl-xl">
-                {i + 1}
-              </td>
-              <td class="whitespace-nowrap py-4 px-6">{item.productName}</td>
-              <td class="whitespace-nowrap py-4 px-6 text-right">{priceText(item.cost)}</td>
-              <td class="whitespace-nowrap py-4 px-6 text-right">
-                {item.quantity}
-              </td>
-              <td class="whitespace-nowrap py-4 px-6 text-right">
-                {priceText(item.cost * item.quantity)}
-              </td>
-              <td class="whitespace-nowrap py-4 px-6 text-right">
-                {priceText(item.totalAmount)}
-              </td>
-              <td
-                class:text-green-500={item.profit > 0}
-                class:text-rose-500={item.profit < 0}
-                class="whitespace-nowrap py-4 px-6 text-right group-last:rounded-br-xl"
-              >
-                {priceText(item.profit)}
-              </td>
-            </tr>
-          {/each}
-        </tbody>
-      </table>
-    </div>
-  </section>
-  <section class="flex flex-col overflow-hidden px-5">
-    <div class="relative overflow-auto">
-      <table class="w-full text-left">
-        <thead class="bg-gray-50 uppercase text-gray-700">
-          <th scope="col" class="w-0 rounded-tl-xl py-3 px-6" />
-          <th scope="col" class="whitespace-nowrap py-3 px-6">ท็อปปิ้ง</th>
-          <th scope="col" class="w-0 whitespace-nowrap py-3 px-6">ต้นทุน</th>
-          <th scope="col" class="w-0 whitespace-nowrap py-3 px-6">จำนวน</th>
-          <th scope="col" class="w-0 whitespace-nowrap py-3 px-6">ต้นทุนรวม</th>
-          <th scope="col" class="w-0 whitespace-nowrap py-3 px-6 text-right">
-            ยอดขายรวม (หลังหัก GP)
-          </th>
-          <th scope="col" class="w-0 whitespace-nowrap py-3 px-6 text-right">กำไร/ขาดทุน</th>
-        </thead>
-        <tbody>
-          {#each profitOfProductAddons as item, i}
-            <tr class="group border-b bg-white align-top last:border-b-0 hover:bg-gray-50">
-              <td class="w-0 py-4 px-6 text-gray-400 group-last:rounded-bl-xl">
-                {i + 1}
-              </td>
-              <td class="whitespace-nowrap py-4 px-6">{item.productName}</td>
-              <td class="whitespace-nowrap py-4 px-6 text-right">{priceText(item.cost)}</td>
-              <td class="whitespace-nowrap py-4 px-6 text-right">
-                {item.quantity}
-              </td>
-              <td class="whitespace-nowrap py-4 px-6 text-right">
-                {priceText(item.cost * item.quantity)}
-              </td>
-              <td class="whitespace-nowrap py-4 px-6 text-right">
-                {priceText(item.totalAmount)}
-              </td>
-              <td
-                class:text-green-500={item.profit > 0}
-                class:text-rose-500={item.profit < 0}
-                class="whitespace-nowrap py-4 px-6 text-right group-last:rounded-br-xl"
-              >
-                {priceText(item.profit)}
-              </td>
-            </tr>
-          {/each}
-        </tbody>
-      </table>
-    </div>
-  </section>
+  <div class="flex flex-1 flex-col gap-y-6">
+    <section class="flex flex-col px-5">
+      <div class="relative overflow-auto">
+        <table class="w-full text-left">
+          <thead class="bg-gray-50 uppercase text-gray-700">
+            <th scope="col" class="w-0 rounded-tl-xl py-3 px-6" />
+            <th scope="col" class="whitespace-nowrap py-3 px-6">สินค้า</th>
+            <th scope="col" class="w-0 whitespace-nowrap py-3 px-6">ต้นทุน</th>
+            <th scope="col" class="w-0 whitespace-nowrap py-3 px-6">จำนวน</th>
+            <th scope="col" class="w-0 whitespace-nowrap py-3 px-6">ต้นทุนรวม</th>
+            <th scope="col" class="w-0 whitespace-nowrap py-3 px-6 text-right">
+              ยอดขายรวม (หลังหัก GP)
+            </th>
+            <th scope="col" class="w-0 whitespace-nowrap py-3 px-6 text-right">กำไร/ขาดทุน</th>
+          </thead>
+          <tbody>
+            {#each profitOfProducts as item, i}
+              <tr class="group border-b bg-white align-top last:border-b-0 hover:bg-gray-50">
+                <td class="w-0 py-4 px-6 text-gray-400 group-last:rounded-bl-xl">
+                  {i + 1}
+                </td>
+                <td class="whitespace-nowrap py-4 px-6">{item.productName}</td>
+                <td class="whitespace-nowrap py-4 px-6 text-right">{priceText(item.cost)}</td>
+                <td class="whitespace-nowrap py-4 px-6 text-right">
+                  {item.quantity}
+                </td>
+                <td class="whitespace-nowrap py-4 px-6 text-right">
+                  {priceText(item.cost * item.quantity)}
+                </td>
+                <td class="whitespace-nowrap py-4 px-6 text-right">
+                  {priceText(item.totalAmount)}
+                </td>
+                <td
+                  class:text-green-500={item.profit > 0}
+                  class:text-rose-500={item.profit < 0}
+                  class="whitespace-nowrap py-4 px-6 text-right group-last:rounded-br-xl"
+                >
+                  {priceText(item.profit)}
+                </td>
+              </tr>
+            {/each}
+          </tbody>
+        </table>
+      </div>
+    </section>
+    <section class="flex flex-col px-5">
+      <div class="relative overflow-auto">
+        <table class="w-full text-left">
+          <thead class="bg-gray-50 uppercase text-gray-700">
+            <th scope="col" class="w-0 rounded-tl-xl py-3 px-6" />
+            <th scope="col" class="whitespace-nowrap py-3 px-6">ท็อปปิ้ง</th>
+            <th scope="col" class="w-0 whitespace-nowrap py-3 px-6">ต้นทุน</th>
+            <th scope="col" class="w-0 whitespace-nowrap py-3 px-6">จำนวน</th>
+            <th scope="col" class="w-0 whitespace-nowrap py-3 px-6">ต้นทุนรวม</th>
+            <th scope="col" class="w-0 whitespace-nowrap py-3 px-6 text-right">
+              ยอดขายรวม (หลังหัก GP)
+            </th>
+            <th scope="col" class="w-0 whitespace-nowrap py-3 px-6 text-right">กำไร/ขาดทุน</th>
+          </thead>
+          <tbody>
+            {#each profitOfProductAddons as item, i}
+              <tr class="group border-b bg-white align-top last:border-b-0 hover:bg-gray-50">
+                <td class="w-0 py-4 px-6 text-gray-400 group-last:rounded-bl-xl">
+                  {i + 1}
+                </td>
+                <td class="whitespace-nowrap py-4 px-6">{item.productName}</td>
+                <td class="whitespace-nowrap py-4 px-6 text-right">{priceText(item.cost)}</td>
+                <td class="whitespace-nowrap py-4 px-6 text-right">
+                  {item.quantity}
+                </td>
+                <td class="whitespace-nowrap py-4 px-6 text-right">
+                  {priceText(item.cost * item.quantity)}
+                </td>
+                <td class="whitespace-nowrap py-4 px-6 text-right">
+                  {priceText(item.totalAmount)}
+                </td>
+                <td
+                  class:text-green-500={item.profit > 0}
+                  class:text-rose-500={item.profit < 0}
+                  class="whitespace-nowrap py-4 px-6 text-right group-last:rounded-br-xl"
+                >
+                  {priceText(item.profit)}
+                </td>
+              </tr>
+            {/each}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
 </div>
