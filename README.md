@@ -2,7 +2,7 @@
 
 This project is a point of sale system developed for a retail shop using the Svelte framework. It allows the shop to manage sales transactions, generate sales reports, and process payments with multiple payment channels in Thailand.
 
-This project works with the `tpearl-api` project, which provides the backend API for the POS system.
+This project works with the `tpearl-strapi` project, which provides the backend API for the POS system.
 
 ## Installation
 
@@ -22,7 +22,7 @@ npm install
 npm run dev
 ```
 
-Note that you will also need to install and run the `tpearl-api` project in order to use the POS system.
+Note that you will also need to install and run the `tpearl-strapi` project in order to use the POS system.
 
 ## Features
 
