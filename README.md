@@ -1,5 +1,7 @@
 # Tpeal shop
 
+![Tpearl shop](https://lh3.googleusercontent.com/vLJc5VpKnvssVzFnS6ufv479aYYgh2bGRBaquegfsIwZz_ME3iw-AdPpe3DdT0C8Geo=w2400)
+
 This project is a point of sale system developed for a retail shop using the Svelte framework. It allows the shop to manage sales transactions, generate sales reports, and process payments with multiple payment channels in Thailand.
 
 This project works with the `tpearl-strapi` project, which provides the backend API for the POS system.
